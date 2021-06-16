@@ -9,7 +9,7 @@ Route.get('get', async () => {
   return await Database
   .table('User')
   .insert({
-    name: 'Ado',
+    name: 'Adoo',
     password: 'Loo'
   })
 })
