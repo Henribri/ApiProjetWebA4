@@ -1,7 +1,9 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 
-
+Route.get('test', ()=>{
+    return 'PAGE DE TEST'
+})
 
 Route.post('signup', 'UserController.create')
 

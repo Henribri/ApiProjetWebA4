@@ -28,11 +28,11 @@ export default class MongoProvider {
     // Register your own bindings
     const mongoose = new Mongoose()
 
-    /*
+    
     mongoose.connect('mongodb+srv://Geralt:Ciri@'+
     'corbeilleexo.tag2v.mongodb.net:/A4L',  {useNewUrlParser: true, useUnifiedTopology: true})
-    */
-
+    
+/*
     mongoose.connect('mongodb+srv://corbeilleexo.tag2v.mongodb.net:/A4L?authSource=%24external&authMechanism=MONGODB-X509', {
       useUnifiedTopology: true,
       ssl: true,
@@ -40,7 +40,7 @@ export default class MongoProvider {
       sslKey:require('fs').readFileSync(`C:/Users/henri/Desktop/WorshopWeb/Corbeille3/X509-cert-3830741774116890921.pem`),
 
     });
-
+*/
     // Lorsqu'on fait un import donne l'accès à la BDD
     this.app.container.singleton('Mongoose', ()=> mongoose)
 
