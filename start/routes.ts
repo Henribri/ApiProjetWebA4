@@ -5,10 +5,16 @@ Route.get('test', ()=>{
     return 'PAGE DE TEST'
 })
 
-Route.post('signup', 'UserController.create')
+Route.post('create', 'CommandsController.create')
 
-Route.post('login','AuthController.login')
+Route.delete('delete','CommandsController.delete')
 
-Route.get('refresh_token', 'AuthController.refresh_token')
+Route.put('edit', 'CommandsController.edit')
 
-Route.get('check', 'AuthController.check')
+Route.patch('pay', 'CommandsController.pay')
+
+Route.get('get_command', 'CommandsController.get_command')
+
+Route.get('get_historic', 'CommandsController.get_historic')
+
+Route.delete('delete_historic', 'CommandsController.delete_historic')
