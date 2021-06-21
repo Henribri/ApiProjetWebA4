@@ -1,9 +1,10 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 
-Route.get('test', ()=>{
-    return 'PAGE DE TEST'
-})
+
+/* Command requests */
+
+Route.get('get_command', 'CommandsController.get_command')
 
 Route.post('create', 'CommandsController.create')
 
@@ -13,7 +14,10 @@ Route.put('edit', 'CommandsController.edit')
 
 Route.patch('pay', 'CommandsController.pay')
 
-Route.get('get_command', 'CommandsController.get_command')
+
+
+
+/*    Historic requests    */
 
 Route.get('get_historic', 'CommandsController.get_historic')
 
