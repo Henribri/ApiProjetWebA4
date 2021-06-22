@@ -48,9 +48,9 @@
   },
   {
     "type": "post",
-    "url": "/create",
+    "url": "/create_command",
     "title": "Create a new Command.",
-    "name": "create",
+    "name": "createCommand",
     "group": "Command",
     "body": [
       {
@@ -91,9 +91,9 @@
   },
   {
     "type": "delete",
-    "url": "/delete",
+    "url": "/delete_command",
     "title": "Delete a Command.",
-    "name": "delete",
+    "name": "deleteCommand",
     "group": "Command",
     "parameter": {
       "fields": {
@@ -138,9 +138,9 @@
   },
   {
     "type": "delete",
-    "url": "/delete_historic",
+    "url": "/delete_historic_command",
     "title": "Delete Commands historic.",
-    "name": "delete",
+    "name": "deleteHistoricCommand",
     "group": "Command",
     "body": [
       {
@@ -181,9 +181,9 @@
   },
   {
     "type": "put",
-    "url": "/edit",
+    "url": "/edit_command",
     "title": "Edit a Command.",
-    "name": "edit",
+    "name": "editCommand",
     "group": "Command",
     "parameter": {
       "fields": {
@@ -239,7 +239,7 @@
     "type": "get",
     "url": "/get_command",
     "title": "Request Command information.",
-    "name": "get_command",
+    "name": "getCommand",
     "group": "Command",
     "parameter": {
       "fields": {
@@ -285,9 +285,9 @@
   },
   {
     "type": "get",
-    "url": "/get_hitoric",
+    "url": "/get_historic_command",
     "title": "Get Commands of a user.",
-    "name": "get_historic",
+    "name": "getHistoricCommand",
     "group": "Command",
     "parameter": {
       "fields": {
@@ -332,9 +332,9 @@
   },
   {
     "type": "patch",
-    "url": "/pay",
+    "url": "/pay_command",
     "title": "Pay a Command.",
-    "name": "pay",
+    "name": "payCommand",
     "group": "Command",
     "parameter": {
       "fields": {

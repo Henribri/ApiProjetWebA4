@@ -10,7 +10,7 @@ export default class CommandsController {
 
     /** 
      * @api {get} /get_command Request Command information.
-     * @apiName get_command
+     * @apiName getCommand
      * @apigroup Command
      * 
      * @apiParam {Number} id Commands unique ID.
@@ -19,7 +19,7 @@ export default class CommandsController {
      * 
      * @apiError Command not found.  
      */
-    public async get_command ({request, response}:HttpContextContract){
+    public async getCommand ({request, response}:HttpContextContract){
         try {            
             return await Command.findOne({_id:request.input('command_id')})
         }catch(err){
@@ -28,8 +28,8 @@ export default class CommandsController {
     }
 
     /**
-     * @api {post} /create Create a new Command.
-     * @apiName create
+     * @api {post} /create_command Create a new Command.
+     * @apiName createCommand
      * @apiGroup Command
      * 
      * @apiBody {Command} Command object.
@@ -37,7 +37,7 @@ export default class CommandsController {
      * @apiSuccess Command created.
      * @apiError Data given are wrong. 
      */
-    public async create ({request, response}:HttpContextContract){
+    public async createCommand ({request, response}:HttpContextContract){
         try{
             const command = new Command(request.body())    
             command.save()
@@ -49,8 +49,8 @@ export default class CommandsController {
     }
     
     /**
-     * @api {put} /edit Edit a Command.
-     * @apiName edit
+     * @api {put} /edit_command Edit a Command.
+     * @apiName editCommand
      * @apiGroup Command
      * 
      * @apiParam {Number} id Commands unique ID.
@@ -59,7 +59,7 @@ export default class CommandsController {
      * @apiSuccess Command edited.
      * @apiError Command not found.
      */
-    public async edit ({request, response}:HttpContextContract){
+    public async editCommand ({request, response}:HttpContextContract){
         try{
             await Command.updateOne({_id:request.input('command_id')}, request.body())
             return response.ok("Command edited")   
@@ -69,8 +69,8 @@ export default class CommandsController {
     }
 
     /**
-     * @api {delete} /delete Delete a Command.
-     * @apiName delete
+     * @api {delete} /delete_command Delete a Command.
+     * @apiName deleteCommand
      * @apiGroup Command
      * 
      * @apiParam {Number} id Commands unique ID.
@@ -78,7 +78,7 @@ export default class CommandsController {
      * @apiSuccess Command deleted.
      * @apiError Command not found.
      */
-    public async delete ({request, response}:HttpContextContract){
+    public async deleteCommand ({request, response}:HttpContextContract){
         try{
             await Command.deleteOne({_id:request.input('command_id')})
             return response.ok("Command deleted")  
@@ -89,8 +89,8 @@ export default class CommandsController {
     }
 
     /**
-     * @api {patch} /pay Pay a Command.
-     * @apiName pay
+     * @api {patch} /pay_command Pay a Command.
+     * @apiName payCommand
      * @apiGroup Command
      * 
      * @apiParam {Number} id Commands unique ID.
@@ -98,7 +98,7 @@ export default class CommandsController {
      * @apiSuccess Command paid.
      * @apiError Command not found.
      */
-    public async pay ({request, response}:HttpContextContract){
+    public async payCommand ({request, response}:HttpContextContract){
         try{
             await Command.updateOne({_id:request.input('command_id')}, {paid:true}) 
             return response.ok("Command paid")      
@@ -112,8 +112,8 @@ export default class CommandsController {
     /*    Historic requests    */
 
     /**
-     * @api {get} /get_hitoric Get Commands of a user.
-     * @apiName get_historic
+     * @api {get} /get_historic_command Get Commands of a user.
+     * @apiName getHistoricCommand
      * @apiGroup Command
      * 
      * @apiParam {Number} id Client unique ID.
@@ -121,7 +121,7 @@ export default class CommandsController {
      * @apiSuccess Commands historic found.
      * @apiError Commands not found.
      */
-    public async get_historic ({request, response}:HttpContextContract){
+    public async getHistoricCommand ({request, response}:HttpContextContract){
         try{
             return await Command.find({'client.id':request.input('client_id')})
         }catch(err){
@@ -131,8 +131,8 @@ export default class CommandsController {
     }
 
     /**
-     * @api {delete} /delete_historic Delete Commands historic.
-     * @apiName delete
+     * @api {delete} /delete_historic_command Delete Commands historic.
+     * @apiName deleteHistoricCommand
      * @apiGroup Command
      * 
      * @apiBody {[Number]} historic Commands that must be deleted.
@@ -140,7 +140,7 @@ export default class CommandsController {
      * @apiSuccess Selected Commands historic deleted.
      * @apiError Commands not found.
      */
-    public async delete_historic ({request, response}:HttpContextContract){
+    public async deleteHistoricCommand ({request, response}:HttpContextContract){
         try{
             await Command.deleteOne({_id: { $in: request.body().delete_historic}})
             return response.ok("Commands deleted")

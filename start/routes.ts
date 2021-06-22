@@ -4,21 +4,21 @@ import Route from '@ioc:Adonis/Core/Route'
 
 /* Command requests */
 
-Route.get('get_command', 'CommandsController.get_command')
+Route.get('get_command', 'CommandsController.getCommand')
 
-Route.post('create', 'CommandsController.create')
+Route.post('create_command', 'CommandsController.createCommand')
 
-Route.delete('delete','CommandsController.delete')
+Route.delete('delete_command','CommandsController.deleteCommand')
 
-Route.put('edit', 'CommandsController.edit')
+Route.put('edit_command', 'CommandsController.editCommand')
 
-Route.patch('pay', 'CommandsController.pay')
+Route.patch('pay_command', 'CommandsController.payCommand')
 
 
 
 
 /*    Historic requests    */
 
-Route.get('get_historic', 'CommandsController.get_historic')
+Route.get('get_historic_command', 'CommandsController.getHistoricCommand')
 
-Route.delete('delete_historic', 'CommandsController.delete_historic')
+Route.delete('delete_historic_command', 'CommandsController.deleteHistoricCommand')
