@@ -142,7 +142,7 @@ export default class CommandsController {
      */
     public async deleteHistoricCommand ({request, response}:HttpContextContract){
         try{
-            await Command.deleteOne({_id: { $in: request.body().delete_historic}})
+            await Command.deleteMany({_id: { $in: request.body().delete_historic}})
             return response.ok("Commands deleted")
         }catch(err){
             return response.status(502)
