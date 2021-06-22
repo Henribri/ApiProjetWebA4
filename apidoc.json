@@ -1,0 +1,7 @@
+{
+    "name": "Commands API",
+    "version": "0.1.0",
+    "description": "Documentation about commands api",
+    "title": "Custom apiDoc browser title",
+    "withCompare": true
+  }
