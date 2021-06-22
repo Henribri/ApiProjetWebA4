@@ -30,8 +30,7 @@ export default class MenusController {
 
     public async createMenu ({request, response}){
         try{
-            const menu = await new Menu(request.body())
-            menu.save()
+            await Menu.create(request.body())            
             return response.ok("Menu created")
         }catch(err){
             return response.status(502)

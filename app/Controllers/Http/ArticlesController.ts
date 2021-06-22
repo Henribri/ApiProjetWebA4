@@ -41,8 +41,7 @@ export default class ArticlesController {
     // Creer un article
     public async createArticle ({request, response}:HttpContextContract){
         try{
-            const article = new Article(request.body())    
-            article.save()
+            await Article.create(request.body())
             return response.ok("Article created")
         }catch(err){
             return response.status(502)
