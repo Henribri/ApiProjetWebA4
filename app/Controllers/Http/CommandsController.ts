@@ -39,8 +39,7 @@ export default class CommandsController {
      */
     public async createCommand ({request, response}:HttpContextContract){
         try{
-            const command = new Command(request.body())    
-            command.save()
+            await Command.create(request.body())
             return response.ok("Command created")
         }catch(err){
             return response.status(502)
