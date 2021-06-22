@@ -5,10 +5,14 @@ Route.get('test', ()=>{
     return 'PAGE DE TEST'
 })
 
-Route.post('signup', 'UserController.create')
+Route.get('get_all_articles', 'ArticlesController.getAllArticles')
 
-Route.post('login','AuthController.login')
+Route.get('get_one_article', 'ArticlesController.getOneArticle')
 
-Route.get('refresh_token', 'AuthController.refresh_token')
+Route.get('get_articles_by_type', 'ArticlesController.getArticlesByType')
 
-Route.get('check', 'AuthController.check')
+Route.post('create_article','ArticlesController.createArticle')
+
+Route.put('edit_article', 'ArticlesController.editArticle')
+
+Route.delete('delete_article', 'ArticlesController.deleteArticle')
