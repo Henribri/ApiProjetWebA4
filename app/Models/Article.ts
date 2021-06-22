@@ -5,4 +5,6 @@ export default  model('Article', new Schema({
     description:String,
     price:Number,
     type:String,
+    restorer:Number,
+    
 }))

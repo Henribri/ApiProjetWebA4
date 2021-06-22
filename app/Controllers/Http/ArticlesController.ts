@@ -29,6 +29,14 @@ export default class ArticlesController {
         }
     }
 
+    public async getArticlesByRestorer ({request, response}:HttpContextContract){
+        try{
+            return await Article.find({restorer:request.input("restorer_id")})
+        }catch(err){
+            return response.status(502)
+        }
+    }
+
 
     // Creer un article
     public async createArticle ({request, response}:HttpContextContract){
