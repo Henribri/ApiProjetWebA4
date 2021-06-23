@@ -14,10 +14,10 @@ export default class Restorer extends BaseModel {
   @column()
   public fk_address_id : number
 
-  @hasOne(()=>Address, {
+  @belongsTo(()=>Address, {
     foreignKey : 'fk_address_id'
   })
-  public address : HasOne<typeof Address>
+  public address : BelongsTo<typeof Address>
 
   @hasOne(()=>User, {
     localKey : 'restorer_id'

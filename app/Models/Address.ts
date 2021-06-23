@@ -24,10 +24,10 @@ export default class Address extends BaseModel {
   })
   public user: HasMany<typeof User>
 
-  @belongsTo(()=>Restorer,{
+  @hasMany(()=>Restorer,{
     foreignKey:'address_id'
   })
-  public restorer: BelongsTo<typeof Restorer>
+  public restorer: HasMany<typeof Restorer>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
