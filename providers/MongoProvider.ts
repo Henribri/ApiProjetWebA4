@@ -28,10 +28,10 @@ export default class MongoProvider {
     // Register your own bindings
     const mongoose = new Mongoose()
 
-    
+
     mongoose.connect('mongodb+srv://Geralt:Ciri@'+
     'corbeilleexo.tag2v.mongodb.net:/Apollon',  {useNewUrlParser: true, useUnifiedTopology: true})
-    
+
 /*
     mongoose.connect('mongodb+srv://corbeilleexo.tag2v.mongodb.net:/A4L?authSource=%24external&authMechanism=MONGODB-X509', {
       useUnifiedTopology: true,
