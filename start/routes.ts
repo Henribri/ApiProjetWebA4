@@ -5,10 +5,12 @@ Route.get('test', ()=>{
     return 'PAGE DE TEST'
 })
 
-Route.post('signup', 'UserController.create')
 
-Route.post('login','AuthController.login')
+Route.get('get_all_deliveries', 'DeliveriesController.getAllDeliveries')
 
-Route.get('refresh_token', 'AuthController.refresh_token')
+Route.get('get_one_delivery', 'DeliveriesController.getOneDelivery')
 
-Route.get('check', 'AuthController.check')
+Route.patch('update_delivery','DeliveriesController.updateDelivery')
+
+Route.post('create_delivery', 'DeliveriesController.createDelivery')
+
