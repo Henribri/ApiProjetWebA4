@@ -13,6 +13,8 @@ Route.get('get_one_article', 'ArticlesController.getOneArticle')
 
 Route.get('get_articles_by_type', 'ArticlesController.getArticlesByType')
 
+Route.get('get_articles_by_restorer', 'ArticlesController.getArticlesByRestorer')
+
 Route.post('create_article','ArticlesController.createArticle')
 
 Route.put('edit_article', 'ArticlesController.editArticle')

@@ -2,9 +2,17 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Article from 'App/Models/Article'
 export default class ArticlesController {
 
-    /* Article requests */
 
-    // Cherche un article
+    
+
+     /**
+     * @api {get} /get_one_article Request article information
+     * @apiName getOneArticle
+     * @apiGroup Article
+     * @apiParam {String} article_id Id of article.
+     * @apiSuccess {Object} article Article object.
+     * @apiError (502) Error Error to request database.
+     */
      public async getOneArticle ({request, response}:HttpContextContract){
         try {            
             return await Article.findOne({_id:request.input('article_id')})
@@ -13,6 +21,13 @@ export default class ArticlesController {
         }
     }
 
+     /**
+     * @api {get} /get_all_article Request all articles
+     * @apiName getAllArticle
+     * @apiGroup Article
+     * @apiSuccess {Object[]} list_article List of articles.
+     * @apiError (502) Error Error to request database.
+     */
     public async getAllArticles ({response}: HttpContextContract){
         try{
             return await Article.find()
@@ -21,6 +36,15 @@ export default class ArticlesController {
         }
     }
 
+
+     /**
+     * @api {get} /get_articles_by_type Request some articles by type
+     * @apiName getArticlesByType
+     * @apiGroup Article
+     * @apiParam {String} article_type Type of articles.
+     * @apiSuccess {Object[]} list_article List of articles.
+     * @apiError (502) Error Error to request database.
+     */
     public async getArticlesByType({request, response} : HttpContextContract){
         try{
             return await Article.find({type:request.input('article_type')})
@@ -29,6 +53,15 @@ export default class ArticlesController {
         }
     }
 
+
+     /**
+     * @api {get} /get_articles_by_restorer Request some articles by restorer
+     * @apiName getArticlesByRestorer
+     * @apiGroup Article
+     * @apiParam {String} restorer_id Id of restorer.
+     * @apiSuccess {Object[]} list_article List of articles.
+     * @apiError (502) Error Error to request database.
+     */
     public async getArticlesByRestorer ({request, response}:HttpContextContract){
         try{
             return await Article.find({restorer:request.input("restorer_id")})
@@ -38,7 +71,14 @@ export default class ArticlesController {
     }
 
 
-    // Creer un article
+     /**
+     * @api {post} /create_article Create a new article
+     * @apiName createArticle
+     * @apiGroup Article
+     * @apiParam (Body) {Object} article Article object.
+     * @apiSuccess response Article created.
+     * @apiError (502) Error Error to request database.
+     */
     public async createArticle ({request, response}:HttpContextContract){
         try{
             await Article.create(request.body())
@@ -50,7 +90,15 @@ export default class ArticlesController {
     }
     
 
-    // Edit un article
+     /**
+     * @api {put} /edit_article Edit an article
+     * @apiName editArticle
+     * @apiGroup Article
+     * @apiParam {String} article_id  Id of article.
+     * @apiParam (Body) {Object} article Article object.
+     * @apiSuccess response Articles edited.
+     * @apiError (502) Error to request database.
+     */
     public async editArticle ({request, response}:HttpContextContract){
         try{
             await Article.updateOne({_id:request.input('article_id')}, request.body())
@@ -60,7 +108,14 @@ export default class ArticlesController {
         }
     }
 
-
+     /**
+     * @api {delete} /delete_article Delete an article
+     * @apiName deleteArticle
+     * @apiGroup Article
+     * @apiParam {String} article_id Id of article.
+     * @apiSuccess response Articles deleted.
+     * @apiError (502) Error to request database.
+     */
     public async deleteArticle ({request, response}:HttpContextContract){
         try{
             await Article.deleteOne({_id:request.input('article_id')})
