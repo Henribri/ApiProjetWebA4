@@ -14,11 +14,20 @@ Route.group(()=>{
 
 /* Groupe de route pour la manipulation des moyens de paiements */
 Route.group(()=>{
-    Route.post('paymethod', 'PayMethodsController.create')
-    Route.get('paymethod','PayMethodsController.index')
-    Route.get('paymethod/:id', 'PayMethodsController.getById')
-    Route.delete('paymethod/:id','PayMethodsController.delete')
-    Route.put('paymethod/:id','PayMethodsController.update')
+    Route.post('creditCard', 'CreditCardsController.create')
+    Route.get('creditCard','CreditCardsController.index')
+    Route.get('creditCard/:id', 'CreditCardsController.getById')
+    Route.delete('creditCard/:id','CreditCardsController.delete')
+    Route.put('creditCard/:id','CreditCardsController.update')
+})
+
+/* Groupe de route pour la manipulation des utilisateurs */
+Route.group(()=>{
+    Route.post('user/client', 'UserController.createClient')
+    Route.get('user','UserController.index')
+    Route.get('user/:id', 'UserController.getById')
+    Route.delete('user/:id','UserController.delete')
+    Route.put('user/:id','UserController.update')
 })
 
 

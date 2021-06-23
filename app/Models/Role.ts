@@ -10,7 +10,9 @@ export default class Role extends BaseModel {
   public role_name: string
 
 
-  @hasMany(()=>User)
+  @hasMany(()=>User,{
+    localKey : 'role_id'
+  })
   public user : HasMany<typeof User>
 
   @column.dateTime({ autoCreate: true })

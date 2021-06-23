@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, belongsTo , BelongsTo} from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, belongsTo , BelongsTo, HasMany, hasMany} from '@ioc:Adonis/Lucid/Orm'
 
 import User from './User'
+import Restorer from './Restorer'
 export default class Address extends BaseModel {
   @column({ isPrimary: true })
   public address_id: number
@@ -18,8 +19,15 @@ export default class Address extends BaseModel {
   @column({ serializeAs: null })
   public address_postal_code: number
 
-  /*@belongsTo(() => User)
-  public user: BelongsTo<typeof User>*/
+  @hasMany(() => User,{
+    localKey:'address_id'
+  })
+  public user: HasMany<typeof User>
+
+  @belongsTo(()=>Restorer,{
+    foreignKey:'address_id'
+  })
+  public restorer: BelongsTo<typeof Restorer>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

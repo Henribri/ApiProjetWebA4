@@ -9,13 +9,15 @@ import {
   HasOne,
   HasMany,
   belongsTo,
-  BelongsTo
+  BelongsTo,
+  Has
 } from '@ioc:Adonis/Lucid/Orm'
 
 import Address from './Address'
 import CreditCard from './CreditCard'
 import internal from 'stream'
 import Role from './Role'
+import Restorer from './Restorer'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -46,7 +48,7 @@ export default class User extends BaseModel {
   public user_is_delivery: boolean
 
   @column()
-  public fk_payement_address_id : number
+  public fk_payment_address_id : number
 
   @column()
   public fk_delivery_address_id : number
@@ -61,25 +63,30 @@ export default class User extends BaseModel {
   public fk_role_id : number
 
 
-  @hasOne(()=>Address,{
-    localKey : 'fk_payment_address_id'
+  @belongsTo(()=>Address,{
+    foreignKey : 'fk_payment_address_id'
   })
-  public payement_address_id: HasOne<typeof Address>
+  public payement_address_id: BelongsTo<typeof Address>
 
-  @hasOne(()=>Address,{
-    localKey : 'fk_delivery_address_id'
+  @belongsTo(()=>Address,{
+    foreignKey : 'fk_delivery_address_id'
   })
-  public delivery_address_id: HasOne<typeof Address>
+  public delivery_address_id: BelongsTo<typeof Address>
 
-  @hasOne(()=>CreditCard,{
-    localKey : 'fk_credit_card_id'
+  @belongsTo(()=>CreditCard,{
+    foreignKey : 'fk_credit_card_id'
   })
-  public credit_card_id: HasOne<typeof CreditCard>
+  public credit_card: BelongsTo<typeof CreditCard>
 
   @belongsTo(()=>Role,{
-    localKey: 'fk_role_id'
+    foreignKey: 'fk_role_id'
   })
   public role: BelongsTo<typeof Role>
+
+  @belongsTo(()=> Restorer, {
+    foreignKey: 'fk_restorer_id'
+  })
+  public restorer : BelongsTo<typeof Restorer>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

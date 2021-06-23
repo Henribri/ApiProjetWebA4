@@ -1,12 +1,11 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import CreditCard from 'App/Models/CreditCard';
-
-export default class PayMethodsController {
+export default class CreditCardsController {
 
     public async index ({response}:HttpContextContract){
-        const payMethods = await CreditCard.query()
-        return response.json({payMethods})
+        const CreditCards = await CreditCard.query()
+        return response.json({CreditCards})
     }
 
     public async getById ({params,response}:HttpContextContract){
@@ -33,5 +32,4 @@ export default class PayMethodsController {
 
         return response.json({creditcard})
     }
-
 }
