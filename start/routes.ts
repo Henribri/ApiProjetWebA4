@@ -14,6 +14,8 @@ Route.put('edit_command', 'CommandsController.editCommand')
 
 Route.patch('pay_command', 'CommandsController.payCommand')
 
+Route.patch('validate_command', 'CommandsController.validateCommand')
+
 
 
 

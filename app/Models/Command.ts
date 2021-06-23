@@ -32,7 +32,8 @@ export default  model('Command', new Schema({
         price:Number
     }],
     toral_price:Number,
-    paid:Boolean
+    paid:Boolean,
+    validated:Boolean
     },
     
 ))

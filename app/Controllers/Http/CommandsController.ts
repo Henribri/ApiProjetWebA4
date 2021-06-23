@@ -107,6 +107,26 @@ export default class CommandsController {
                
     }
 
+        /**
+     * @api {patch} /validate_command Validate a Command.
+     * @apiName validateCommand
+     * @apiGroup Command
+     * 
+     * @apiParam {Number} id Commands unique ID.
+     * 
+     * @apiSuccess Command validated.
+     * @apiError Command not found.
+     */
+         public async validateCommand ({request, response}:HttpContextContract){
+            try{
+                await Command.updateOne({_id:request.input('command_id')}, {validated:true}) 
+                return response.ok("Command validated")      
+            }catch(err){
+                return response.status(502)
+            }
+                   
+        }
+
 
     /*    Historic requests    */
 
