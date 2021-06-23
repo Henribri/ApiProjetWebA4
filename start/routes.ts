@@ -5,10 +5,8 @@ Route.get('test', ()=>{
     return 'PAGE DE TEST'
 })
 
-Route.post('signup', 'UserController.create')
+Route.post('login_auth','AuthController.loginAuth')
 
-Route.post('login','AuthController.login')
+Route.get('refresh_token_auth', 'AuthController.refreshTokenAuth')
 
-Route.get('refresh_token', 'AuthController.refresh_token')
-
-Route.get('check', 'AuthController.check')
+Route.get('check_auth', 'AuthController.checkAuth')
