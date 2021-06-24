@@ -1,13 +1,15 @@
 import Route from '@ioc:Adonis/Core/Route'
+import jwt from 'jsonwebtoken'
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 
 /* Groupe de route pour la manipulation des adresses */
 Route.group(()=>{
-    Route.post('address', 'AddressesController.create')
-    Route.get('address','AddressesController.index')
-    Route.get('address/:id', 'AddressesController.getById')
-    Route.delete('address/:id','AddressesController.delete')
-    Route.put('address/:id','AddressesController.update')
+    Route.post('address/:type', 'AddressesController.create')
+    Route.get('addresses','AddressesController.index')
+    Route.get('address/:type', 'AddressesController.getById')
+    Route.delete('address/:type','AddressesController.delete')
+    Route.put('address/:type','AddressesController.update')
 })
 
 
@@ -15,10 +17,10 @@ Route.group(()=>{
 /* Groupe de route pour la manipulation des moyens de paiements */
 Route.group(()=>{
     Route.post('creditCard', 'CreditCardsController.create')
-    Route.get('creditCard','CreditCardsController.index')
-    Route.get('creditCard/:id', 'CreditCardsController.getById')
-    Route.delete('creditCard/:id','CreditCardsController.delete')
-    Route.put('creditCard/:id','CreditCardsController.update')
+    Route.get('creditCards','CreditCardsController.index')
+    Route.get('creditCard', 'CreditCardsController.getById')
+    Route.delete('creditCard','CreditCardsController.delete')
+    Route.put('creditCard','CreditCardsController.update')
 })
 
 /* Groupe de route pour la manipulation des utilisateurs */
@@ -36,10 +38,10 @@ Route.group(()=>{
 /* Groupe de route pour la manipulation des restorer */
 Route.group(()=>{
     Route.post('restorer', 'RestorersController.createClient')
-    Route.get('restorer','RestorersController.index')
-    Route.get('restorer/:id', 'RestorersController.getById')
-    Route.delete('restorer/:id','RestorersController.delete')
-    Route.put('restorer/:id','RestorersController.update')
+    Route.get('restorers','RestorersController.index')
+    Route.get('restorer', 'RestorersController.getById')
+    Route.delete('restorer','RestorersController.delete')
+    Route.put('restorer','RestorersController.update')
 })
 
 

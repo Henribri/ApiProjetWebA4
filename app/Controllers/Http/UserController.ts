@@ -5,31 +5,43 @@ import Address from 'App/Models/Address'
 import Role from 'App/Models/Role'
 import Restorer from 'App/Models/Restorer'
 import { add } from 'winston'
+import jwt from 'jsonwebtoken'
 
 
 export default class UsersController {
 
-    public async index ({response}:HttpContextContract){
+    public async index ({response,request}:HttpContextContract){
         try{
-            const users = await User.query()
-            .preload('role')
-            .preload('credit_card')
-            .preload('delivery_address_id')
-            .preload('payement_address_id')
-            .preload('restorer')
-            return response.status(200).json({users})
-        }catch(err){
+            const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'])
+            if (user.role.role_id == 5 || user.role.role_id == 4){
+                const users = await User.query()
+                .preload('role')
+                .preload('credit_card')
+                .preload('delivery_address_id')
+                .preload('payment_address_id')
+                .preload('restorer')
+                return response.status(200).json({users})
+            }else{
+                return response.status(403).json({message: "Error you don't have the correct permissions"})
+            }
 
+        }catch(err){
+            return response.status(500).json({err})
         }
 
     }
 
-    public async getById ({params,response}:HttpContextContract){
+    public async getById ({params,response, request}:HttpContextContract){
         try{
-            const user = await User.findOrFail(params.id);
-            return response.status(200).json({user})
+            if (jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'] == params.id){
+                const user = await User.findOrFail(params.id);
+                return response.status(200).json({user})
+            }else{
+                return response.status(403).json({message: "Error wrong user ID"})
+            }
+
         }catch(err){
-            return response.json({err})
+            return response.status(500).json({err})
         }
 
     }
@@ -45,7 +57,7 @@ export default class UsersController {
             }
             if (request.body()['payment_address_city']!= undefined && request.body()['payment_address_street']!= undefined && request.body()['payment_address_postal_code']!= undefined && request.body()['payment_address_street_number']!= undefined){
                 const payment_address = await Address.create({address_city: request.body()['payment_address_city'], address_street: request.body()['payment_address_street'], address_street_number: request.body()['payment_address_street_number'], address_postal_code:request.body()['payment_address_postal_code'] });
-                await user.related('payement_address_id').associate(payment_address)
+                await user.related('payment_address_id').associate(payment_address)
             }
             if (request.body()['credit_card_type']!=undefined && request.body()['credit_card_num']!=undefined ){
                 const creditcard = await CreditCard.create({credit_card_type: request.body()['credit_card_type'], credit_card_num : request.body()['credit_card_num'] });
@@ -94,27 +106,38 @@ export default class UsersController {
 
     public async update ({request, response, params}:HttpContextContract){
         try {
-            const user = await User.findOrFail(params.id);
-            if (request.body()['user_support']!== false && request.body()['user_is_supported']!==false){
-                user.merge({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],user_password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:request.body()['user_is_supported'],user_support:request.body()['user_support']});
-                await user.save();
-                return response.status(200).json({user})
+            if (jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'] == params.id){
+                const user = await User.findOrFail(params.id);
+                if (request.body()['user_support']!== false && request.body()['user_is_supported']!==false){
+                    user.merge({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],user_password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:request.body()['user_is_supported'],user_support:request.body()['user_support']});
+                    await user.save();
+                    return response.status(200).json({user})
+                }else{
+                    return response.status(403).json({message: "once true you can't change your support state"})
+                }
             }else{
-                return response.status(403).json({message: "once true you can't change your support state"})
+                return response.status(403).json({message: "Error wrong user ID"})
             }
+
+
         }catch(err){
             return response.status(500).json({err})
         }
 
     }
 
-    public async delete({response, params}:HttpContextContract){
+    public async delete({response,request, params}:HttpContextContract){
         try{
-            const user = await User.findOrFail(params.id);
-            await user.delete();
-            return response.status(200).json({user})
-        }catch(err){
+            if (jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'] == params.id){
+                const user = await User.findOrFail(params.id);
+                await user.delete();
+                return response.status(200).json({user})
+            }else{
+                return response.status(403).json({message: "Error wrong user ID"})
+            }
 
+        }catch(err){
+            return response.status(500).json({err})
         }
 
     }

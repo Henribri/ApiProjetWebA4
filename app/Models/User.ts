@@ -66,7 +66,7 @@ export default class User extends BaseModel {
   @belongsTo(()=>Address,{
     foreignKey : 'fk_payment_address_id'
   })
-  public payement_address_id: BelongsTo<typeof Address>
+  public payment_address_id: BelongsTo<typeof Address>
 
   @belongsTo(()=>Address,{
     foreignKey : 'fk_delivery_address_id'
