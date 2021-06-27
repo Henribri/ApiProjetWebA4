@@ -7,6 +7,15 @@ import User from 'App/Models/User';
 
 export default class AddressesController {
 
+
+    /**
+     * @api {get} /addresses Request all addresses
+     * @apiName index
+     * @apiGroup Address
+     * @apiSuccess {Object} address objects.
+     * @apiError (500) Error Error to request database.
+     * @apiError (403) Error you don't have permission.
+     */
     public async index ({response,request}:HttpContextContract){
         try{
             const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'])
@@ -23,6 +32,14 @@ export default class AddressesController {
 
     }
 
+    /**
+     * @api {get} /addresses Request all addresses
+     * @apiName index
+     * @apiGroup Address
+     * @apiSuccess {Object} address objects.
+     * @apiError (500) Error Error to request database.
+     * @apiError (403) Error you don't have permission.
+     */
     public async getById ({params,response,request}:HttpContextContract){
         try{
             const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'])

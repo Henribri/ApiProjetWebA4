@@ -4,12 +4,20 @@ import CreditCard from 'App/Models/CreditCard'
 import Address from 'App/Models/Address'
 import Role from 'App/Models/Role'
 import Restorer from 'App/Models/Restorer'
-import { add } from 'winston'
 import jwt from 'jsonwebtoken'
 
 
 export default class UsersController {
 
+
+    /**
+     * @api {get} /users Request all users
+     * @apiName index
+     * @apiGroup User
+     * @apiSuccess {Object} user object.
+     * @apiError (500) Error Error to request database.
+     * @apiError (403) Error you don't have permission.
+     */
     public async index ({response,request}:HttpContextContract){
         try{
             const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'])
@@ -31,6 +39,15 @@ export default class UsersController {
 
     }
 
+    /**
+     * @api {get} /user Request a specific user thanks to his token
+     * @apiName getById
+     * @apiGroup User
+     * @apiParam {Integer} user_id of the user
+     * @apiSuccess {Object} user object.
+     * @apiError (500) Error Error to request database.
+     * @apiError (403) Error Error wrong user ID.
+     */
     public async getById ({params,response, request}:HttpContextContract){
         try{
             if (jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'] == params.id){
@@ -46,6 +63,13 @@ export default class UsersController {
 
     }
 
+    /**
+     * @api {post} /user/client create a user with the client role
+     * @apiName createClient
+     * @apiGroup User
+     * @apiSuccess {Object} user object.
+     * @apiError (500) Error Error to request database.
+     */
     public async createClient({ request , response }:HttpContextContract){
 
         try {
@@ -67,12 +91,19 @@ export default class UsersController {
             await user.related('role').associate(role)
             return response.status(201).json({user})
         }catch(err){
-            return response.json({err})
+            return response.status(500).json({err})
         }
 
 
     }
 
+    /**
+     * @api {post} /user/delivery create a user with the delivery man role
+     * @apiName createDelivery
+     * @apiGroup User
+     * @apiSuccess {Object} user object.
+     * @apiError (500) Error Error to request database.
+     */
     public async createDelivery({ request , response }:HttpContextContract){
         try {
             const user = await User.create({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],user_password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:request.body()['user_is_supported'],user_support:request.body()['user_support'],user_is_delivery:true});
@@ -86,6 +117,13 @@ export default class UsersController {
 
     }
 
+    /**
+     * @api {post} /user/delivery create a user with the restorer role
+     * @apiName createRestorer
+     * @apiGroup User
+     * @apiSuccess {Object} user object.
+     * @apiError (500) Error Error to request database.
+     */
     public async createRestorer({ request , response }:HttpContextContract){
         try {
             const user = await User.create({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],user_password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:request.body()['user_is_supported'],user_support:request.body()['user_support'],user_is_delivery:false});
@@ -103,18 +141,22 @@ export default class UsersController {
 
     }
 
-
+    /**
+     * @api {put} /user/:id update the specified user
+     * @apiName update
+     * @apiGroup User
+     * @apiParam {Integer} user_id Id of the user.
+     * @apiSuccess {Object} user object.
+     * @apiError (500) Error Error to request database.
+     * @apiError (403) Error Wrong user ID.
+     */
     public async update ({request, response, params}:HttpContextContract){
         try {
             if (jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'] == params.id){
                 const user = await User.findOrFail(params.id);
-                if (request.body()['user_support']!== false && request.body()['user_is_supported']!==false){
-                    user.merge({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],user_password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:request.body()['user_is_supported'],user_support:request.body()['user_support']});
-                    await user.save();
-                    return response.status(200).json({user})
-                }else{
-                    return response.status(403).json({message: "once true you can't change your support state"})
-                }
+                user.merge({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],user_password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number']});
+                await user.save();
+                return response.status(200).json({user})
             }else{
                 return response.status(403).json({message: "Error wrong user ID"})
             }
@@ -126,6 +168,53 @@ export default class UsersController {
 
     }
 
+    /**
+     * @api {put} /user/:id update the specified user for sponsoring
+     * @apiName updateSponsor
+     * @apiGroup User
+     * @apiParam {Integer} user_id Id of the user.
+     * @apiSuccess {Object} user object.
+     * @apiError (500) Error Error to request database.
+     * @apiError (403) Error Wrong user ID.
+     * @apiError (400) error this user is already supported or you enter the wrong email
+     * @apiError (400) error Unable to find the user or the user is already supporting someone
+     */
+     public async updateSponsor ({request, response, params}:HttpContextContract){
+        try {
+            if (jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'] == params.id){
+                const user = await User.findOrFail(params.id);
+                const filleul = await User.findBy('user_email', request.body()['filleul_email'])
+                if (user.user_support==false && filleul && user.fk_role_id == filleul.fk_role_id){
+                    if (filleul.user_is_supported == false){
+                        user.user_support = true;
+                        await user.save();
+                        filleul.user_is_supported = true;
+                        await filleul.save();
+                    }else{
+                        return response.status(400).json({message: "error this user is already supported or you enter the wrong email"})
+                    }
+                    return response.status(200).json({user})
+                }else{
+                    return response.status(400).json({message: "error Unable to find the user or the user is already supporting someone"})
+                }
+            }else{
+                return response.status(403).json({message: "Error wrong user ID"})
+            }
+        }catch(err){
+            return response.status(500).json({err})
+        }
+
+    }
+
+    /**
+     * @api {delete} /user/:id delete the specified user
+     * @apiName delete
+     * @apiGroup User
+     * @apiParam {Integer} user_id  of the user.
+     * @apiSuccess {Object} user object.
+     * @apiError (500) Error Error to request database.
+     * @apiError (403) Wrong user ID.
+     */
     public async delete({response,request, params}:HttpContextContract){
         try{
             if (jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'] == params.id){

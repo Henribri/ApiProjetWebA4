@@ -32,6 +32,7 @@ Route.group(()=>{
     Route.get('user/:id', 'UserController.getById')
     Route.delete('user/:id','UserController.delete')
     Route.put('user/:id','UserController.update')
+    Route.put('user/support/:id','UserController.updateSponsor')
 })
 
 
