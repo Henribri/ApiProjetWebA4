@@ -2,7 +2,6 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import jwt from 'jsonwebtoken'
 
 import Address from "App/Models/Address";
-import Restorer from 'App/Models/Restorer';
 import User from 'App/Models/User';
 
 export default class AddressesController {

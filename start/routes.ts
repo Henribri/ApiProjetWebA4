@@ -1,7 +1,4 @@
 import Route from '@ioc:Adonis/Core/Route'
-import jwt from 'jsonwebtoken'
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 
 /* Groupe de route pour la manipulation des adresses */
 Route.group(()=>{
@@ -37,6 +34,7 @@ Route.group(()=>{
     Route.get('restorers','RestorersController.index')
     Route.post('user/delivery', 'UserController.createDelivery')
     Route.post('user/restorer', 'UserController.createRestorer')
+    Route.get('restorers','RestorersController.index')
 })
 
 
@@ -52,10 +50,11 @@ Route.group(()=>{
 
 
 
-/*Route.get('test', ()=>{
-    return 'PAGE DE TEST'
+Route.get('', ()=>{
+    return ''
 })
 
+/*
 Route.post('signup', 'UserController.create')
 
 Route.post('login','AuthController.login')

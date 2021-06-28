@@ -20,7 +20,7 @@ export default class CreditCardsController {
 
     }
 
-    public async getById ({params,response,request}:HttpContextContract){
+    public async getById ({response,request}:HttpContextContract){
         try{
             const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'])
             if (user){
@@ -55,7 +55,7 @@ export default class CreditCardsController {
 
     }
 
-    public async update ({request, response, params}:HttpContextContract){
+    public async update ({request, response}:HttpContextContract){
         try{
             const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'])
             if (user.fk_credit_card_id!=null){
@@ -75,7 +75,7 @@ export default class CreditCardsController {
 
     }
 
-    public async delete({response, params,request}:HttpContextContract){
+    public async delete({response, request}:HttpContextContract){
         try{
             const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'])
             if (user.fk_credit_card_id!=null){

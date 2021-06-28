@@ -4,18 +4,12 @@ import {
   column,
   beforeSave,
   BaseModel,
-  hasOne,
-  hasMany,
-  HasOne,
-  HasMany,
   belongsTo,
   BelongsTo,
-  Has
 } from '@ioc:Adonis/Lucid/Orm'
 
 import Address from './Address'
 import CreditCard from './CreditCard'
-import internal from 'stream'
 import Role from './Role'
 import Restorer from './Restorer'
 

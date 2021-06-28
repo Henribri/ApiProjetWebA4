@@ -1,6 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column, HasMany, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm'
-import { close } from 'fs'
+import { BaseModel, BelongsTo, belongsTo, column, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm'
 import Address from './Address'
 import User from './User'
 

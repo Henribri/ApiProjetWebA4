@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken'
 
 
 export default class RestorersController {
-    public async index ({response,request}:HttpContextContract){
+    public async index ({response}:HttpContextContract){
         try{
             const restorers = await Restorer.query()
             return response.status(200).json({restorers})
@@ -17,7 +17,7 @@ export default class RestorersController {
 
     }
 
-    public async getById ({params,request,response}:HttpContextContract){
+    public async getById ({request,response}:HttpContextContract){
         try{
             const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'])
             if (user.fk_role_id!=null){
@@ -56,7 +56,7 @@ export default class RestorersController {
 
     }
 
-    public async update ({request, response, params}:HttpContextContract){
+    public async update ({request, response}:HttpContextContract){
         try{
             const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'])
             if (user.fk_restorer_id!=null){
@@ -76,7 +76,7 @@ export default class RestorersController {
 
     }
 
-    public async delete({response,request, params}:HttpContextContract){
+    public async delete({response,request}:HttpContextContract){
         try{
             const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'])
             if (user.fk_restorer_id!=null){
