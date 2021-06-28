@@ -10,7 +10,9 @@ Route.get('get_all_deliveries', 'DeliveriesController.getAllDeliveries')
 
 Route.get('get_one_delivery', 'DeliveriesController.getOneDelivery')
 
-Route.patch('update_delivery','DeliveriesController.updateDelivery')
 
-Route.post('create_delivery', 'DeliveriesController.createDelivery')
 
+Route.group(()=>{
+    Route.patch('update_delivery','DeliveriesController.updateDelivery')
+    Route.post('create_delivery', 'DeliveriesController.createDelivery')
+}).middleware('auth')
