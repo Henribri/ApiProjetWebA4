@@ -4,18 +4,12 @@ import {
   column,
   beforeSave,
   BaseModel,
-  hasOne,
-  hasMany,
-  HasOne,
-  HasMany,
   belongsTo,
   BelongsTo,
-  Has
 } from '@ioc:Adonis/Lucid/Orm'
 
 import Address from './Address'
 import CreditCard from './CreditCard'
-import internal from 'stream'
 import Role from './Role'
 import Restorer from './Restorer'
 
@@ -32,8 +26,8 @@ export default class User extends BaseModel {
   @column()
   public user_email: string
 
-  @column()
-  public user_password: string
+  @column({columnName:'user_password'})
+  public password: string
 
   @column()
   public user_phone_number: string
@@ -96,8 +90,8 @@ export default class User extends BaseModel {
 
   @beforeSave()
   public static async hashPassword (user: User) {
-    if (user.$dirty.user_password) {
-      user.user_password = await Hash.make(user.user_password)
+    if (user.$dirty.password) {
+      user.password = await Hash.make(user.password)
     }
   }
 }

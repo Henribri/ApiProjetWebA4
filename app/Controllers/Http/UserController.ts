@@ -73,7 +73,7 @@ export default class UsersController {
     public async createClient({ request , response }:HttpContextContract){
 
         try {
-            const user = await User.create({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],user_password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:request.body()['user_is_supported'],user_support:request.body()['user_support'],user_is_delivery:false});
+            const user = await User.create({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:request.body()['user_is_supported'],user_support:request.body()['user_support'],user_is_delivery:false});
 
             if (request.body()['delivery_address_city']!= undefined && request.body()['delivery_address_street']!= undefined && request.body()['delivery_address_postal_code']!= undefined && request.body()['delivery_address_street_number']!= undefined){
                 const delivery_address = await Address.create({address_city: request.body()['delivery_address_city'], address_street: request.body()['delivery_address_street'], address_street_number: request.body()['delivery_address_street_number'], address_postal_code:request.body()['delivery_address_postal_code'] });
@@ -106,7 +106,7 @@ export default class UsersController {
      */
     public async createDelivery({ request , response }:HttpContextContract){
         try {
-            const user = await User.create({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],user_password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:request.body()['user_is_supported'],user_support:request.body()['user_support'],user_is_delivery:true});
+            const user = await User.create({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:request.body()['user_is_supported'],user_support:request.body()['user_support'],user_is_delivery:true});
             const role = await Role.findOrFail(2)
             await user.related('role').associate(role)
             return response.status(201).json({user})
@@ -126,7 +126,7 @@ export default class UsersController {
      */
     public async createRestorer({ request , response }:HttpContextContract){
         try {
-            const user = await User.create({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],user_password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:false,user_support:false,user_is_delivery:false});
+            const user = await User.create({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:false,user_support:false,user_is_delivery:false});
             const role = await Role.findOrFail(3)
             await user.related('role').associate(role)
             const restorer = await Restorer.create({restorer_name : request.body()['restorer_name']})
@@ -154,7 +154,7 @@ export default class UsersController {
         try {
             if (jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'] == params.id){
                 const user = await User.findOrFail(params.id);
-                user.merge({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],user_password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number']});
+                user.merge({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number']});
                 await user.save();
                 return response.status(200).json({user})
             }else{

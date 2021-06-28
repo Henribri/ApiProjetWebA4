@@ -33,7 +33,7 @@ const authConfig = {
             provider: {
                 driver: 'lucid',
                 identifierKey: 'id',
-                uids: ['email'],
+                uids: ['user_email'],
                 model: () => Promise.resolve().then(() => __importStar(global[Symbol.for('ioc.use')]('App/Models/User'))),
             },
         },
