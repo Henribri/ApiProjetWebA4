@@ -10,7 +10,7 @@ Route.group(()=>{
     Route.get('address/:type', 'AddressesController.getById')
     Route.delete('address/:type','AddressesController.delete')
     Route.put('address/:type','AddressesController.update')
-})
+}).middleware('auth')
 
 
 
@@ -34,6 +34,7 @@ Route.group(()=>{
 
 Route.group(()=>{
     Route.post('user/client', 'UserController.createClient')
+    Route.get('restorers','RestorersController.index')
     Route.post('user/delivery', 'UserController.createDelivery')
     Route.post('user/restorer', 'UserController.createRestorer')
 })
@@ -42,7 +43,6 @@ Route.group(()=>{
 /* Groupe de route pour la manipulation des restorer */
 Route.group(()=>{
     Route.post('restorer', 'RestorersController.createClient')
-    Route.get('restorers','RestorersController.index')
     Route.get('restorer', 'RestorersController.getById')
     Route.delete('restorer','RestorersController.delete')
     Route.put('restorer','RestorersController.update')
