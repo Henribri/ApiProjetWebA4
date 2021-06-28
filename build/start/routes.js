@@ -29,12 +29,15 @@ Route_1.default.group(() => {
     Route_1.default.post('user/client', 'UserController.createClient');
     Route_1.default.post('user/delivery', 'UserController.createDelivery');
     Route_1.default.post('user/restorer', 'UserController.createRestorer');
+    Route_1.default.get('restorers', 'RestorersController.index');
 });
 Route_1.default.group(() => {
     Route_1.default.post('restorer', 'RestorersController.createClient');
-    Route_1.default.get('restorers', 'RestorersController.index');
     Route_1.default.get('restorer', 'RestorersController.getById');
     Route_1.default.delete('restorer', 'RestorersController.delete');
     Route_1.default.put('restorer', 'RestorersController.update');
 }).middleware('auth');
+Route_1.default.get('', () => {
+    return '';
+});
 //# sourceMappingURL=routes.js.map

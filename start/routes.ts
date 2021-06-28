@@ -49,10 +49,11 @@ Route.group(()=>{
 
 
 
-/*Route.get('test', ()=>{
-    return 'PAGE DE TEST'
+Route.get('', ()=>{
+    return ''
 })
 
+/*
 Route.post('signup', 'UserController.create')
 
 Route.post('login','AuthController.login')
