@@ -1,8 +1,8 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 
-Route.get('test', ()=>{
-    return 'PAGE DE TEST'
+Route.get('', ()=>{
+    return ''
 })
 
 
