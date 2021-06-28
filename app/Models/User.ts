@@ -32,8 +32,8 @@ export default class User extends BaseModel {
   @column()
   public user_email: string
 
-  @column()
-  public user_password: string
+  @column({columnName:'user_password'})
+  public password: string
 
   @column()
   public user_phone_number: string
@@ -96,8 +96,8 @@ export default class User extends BaseModel {
 
   @beforeSave()
   public static async hashPassword (user: User) {
-    if (user.$dirty.user_password) {
-      user.user_password = await Hash.make(user.user_password)
+    if (user.$dirty.password) {
+      user.password = await Hash.make(user.password)
     }
   }
 }

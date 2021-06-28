@@ -69,27 +69,34 @@ export default class UsersController {
      * @apiGroup User
      * @apiSuccess {Object} user object.
      * @apiError (500) Error Error to request database.
+     * @apiError (400) Error Email already taken.
      */
     public async createClient({ request , response }:HttpContextContract){
 
         try {
-            const user = await User.create({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],user_password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:request.body()['user_is_supported'],user_support:request.body()['user_support'],user_is_delivery:false});
+            const existing_user = await User.findBy('user_email', request.body()['user_email'])
+            if(!existing_user){
+                const user = await User.create({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:false,user_support:false,user_is_delivery:false});
 
-            if (request.body()['delivery_address_city']!= undefined && request.body()['delivery_address_street']!= undefined && request.body()['delivery_address_postal_code']!= undefined && request.body()['delivery_address_street_number']!= undefined){
-                const delivery_address = await Address.create({address_city: request.body()['delivery_address_city'], address_street: request.body()['delivery_address_street'], address_street_number: request.body()['delivery_address_street_number'], address_postal_code:request.body()['delivery_address_postal_code'] });
-                await user.related('delivery_address_id').associate(delivery_address)
+                if (request.body()['delivery_address_city']!= undefined && request.body()['delivery_address_street']!= undefined && request.body()['delivery_address_postal_code']!= undefined && request.body()['delivery_address_street_number']!= undefined){
+                    const delivery_address = await Address.create({address_city: request.body()['delivery_address_city'], address_street: request.body()['delivery_address_street'], address_street_number: request.body()['delivery_address_street_number'], address_postal_code:request.body()['delivery_address_postal_code'] });
+                    await user.related('delivery_address_id').associate(delivery_address)
+                }
+                if (request.body()['payment_address_city']!= undefined && request.body()['payment_address_street']!= undefined && request.body()['payment_address_postal_code']!= undefined && request.body()['payment_address_street_number']!= undefined){
+                    const payment_address = await Address.create({address_city: request.body()['payment_address_city'], address_street: request.body()['payment_address_street'], address_street_number: request.body()['payment_address_street_number'], address_postal_code:request.body()['payment_address_postal_code'] });
+                    await user.related('payment_address_id').associate(payment_address)
+                }
+                if (request.body()['credit_card_type']!=undefined && request.body()['credit_card_num']!=undefined ){
+                    const creditcard = await CreditCard.create({credit_card_type: request.body()['credit_card_type'], credit_card_num : request.body()['credit_card_num'] });
+                    await user.related('credit_card').associate(creditcard)
+                }
+                const role = await Role.findOrFail(1)
+                await user.related('role').associate(role)
+                return response.status(201).json({user})
+            }else{
+                return response.status(400).json({message: "email already taken", code:"email"})
             }
-            if (request.body()['payment_address_city']!= undefined && request.body()['payment_address_street']!= undefined && request.body()['payment_address_postal_code']!= undefined && request.body()['payment_address_street_number']!= undefined){
-                const payment_address = await Address.create({address_city: request.body()['payment_address_city'], address_street: request.body()['payment_address_street'], address_street_number: request.body()['payment_address_street_number'], address_postal_code:request.body()['payment_address_postal_code'] });
-                await user.related('payment_address_id').associate(payment_address)
-            }
-            if (request.body()['credit_card_type']!=undefined && request.body()['credit_card_num']!=undefined ){
-                const creditcard = await CreditCard.create({credit_card_type: request.body()['credit_card_type'], credit_card_num : request.body()['credit_card_num'] });
-                await user.related('credit_card').associate(creditcard)
-            }
-            const role = await Role.findOrFail(1)
-            await user.related('role').associate(role)
-            return response.status(201).json({user})
+
         }catch(err){
             return response.status(500).json({err})
         }
@@ -103,13 +110,20 @@ export default class UsersController {
      * @apiGroup User
      * @apiSuccess {Object} user object.
      * @apiError (500) Error Error to request database.
+     * @apiError (400) Error Email already taken.
      */
     public async createDelivery({ request , response }:HttpContextContract){
         try {
-            const user = await User.create({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],user_password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:request.body()['user_is_supported'],user_support:request.body()['user_support'],user_is_delivery:true});
+            const existing_user = await User.findBy('user_email', request.body()['user_email'])
+            if(!existing_user){
+                const user = await User.create({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:false,user_support:false,user_is_delivery:true});
             const role = await Role.findOrFail(2)
             await user.related('role').associate(role)
             return response.status(201).json({user})
+            }else{
+                return response.status(400).json({message: "email already taken", code:"email"})
+            }
+
 
         }catch(err){
             return response.status(500).json({err})
@@ -123,17 +137,25 @@ export default class UsersController {
      * @apiGroup User
      * @apiSuccess {Object} user object.
      * @apiError (500) Error Error to request database.
+     * @apiError (400) Error Email already taken.
      */
     public async createRestorer({ request , response }:HttpContextContract){
         try {
-            const user = await User.create({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],user_password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:false,user_support:false,user_is_delivery:false});
-            const role = await Role.findOrFail(3)
-            await user.related('role').associate(role)
-            const restorer = await Restorer.create({restorer_name : request.body()['restorer_name']})
-            const address = await Address.create({address_city: request.body()['restorer_address_city'], address_street: request.body()['restorer_address_street'], address_street_number: request.body()['restorer_address_street_number'], address_postal_code:request.body()['restorer_address_postal_code'] })
-            await restorer.related('address').associate(address)
-            await user.related('restorer').associate(restorer)
-            return response.status(201).json({user})
+            const existing_user = await User.findBy('user_email', request.body()['user_email'])
+            if(!existing_user){
+                const user = await User.create({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:false,user_support:false,user_is_delivery:false});
+                const role = await Role.findOrFail(3)
+                await user.related('role').associate(role)
+                const restorer = await Restorer.create({restorer_name : request.body()['restorer_name']})
+                const address = await Address.create({address_city: request.body()['restorer_address_city'], address_street: request.body()['restorer_address_street'], address_street_number: request.body()['restorer_address_street_number'], address_postal_code:request.body()['restorer_address_postal_code'] })
+                await restorer.related('address').associate(address)
+                await user.related('restorer').associate(restorer)
+                return response.status(201).json({user})
+
+            }else{
+                return response.status(400).json({message: "email already taken", code:"email"})
+            }
+
 
         }catch(err){
             return response.status(500).json({err})
@@ -154,7 +176,7 @@ export default class UsersController {
         try {
             if (jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'] == params.id){
                 const user = await User.findOrFail(params.id);
-                user.merge({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],user_password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number']});
+                user.merge({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number']});
                 await user.save();
                 return response.status(200).json({user})
             }else{
