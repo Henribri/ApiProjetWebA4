@@ -21,18 +21,21 @@ Route.group(()=>{
     Route.get('creditCard', 'CreditCardsController.getById')
     Route.delete('creditCard','CreditCardsController.delete')
     Route.put('creditCard','CreditCardsController.update')
-})
+}).middleware('auth')
 
 /* Groupe de route pour la manipulation des utilisateurs */
 Route.group(()=>{
-    Route.post('user/client', 'UserController.createClient')
-    Route.post('user/delivery', 'UserController.createDelivery')
-    Route.post('user/restorer', 'UserController.createRestorer')
     Route.get('user','UserController.index')
     Route.get('user/:id', 'UserController.getById')
     Route.delete('user/:id','UserController.delete')
     Route.put('user/:id','UserController.update')
     Route.put('user/support/:id','UserController.updateSponsor')
+}).middleware('auth')
+
+Route.group(()=>{
+    Route.post('user/client', 'UserController.createClient')
+    Route.post('user/delivery', 'UserController.createDelivery')
+    Route.post('user/restorer', 'UserController.createRestorer')
 })
 
 
@@ -43,7 +46,7 @@ Route.group(()=>{
     Route.get('restorer', 'RestorersController.getById')
     Route.delete('restorer','RestorersController.delete')
     Route.put('restorer','RestorersController.update')
-})
+}).middleware('auth')
 
 
 

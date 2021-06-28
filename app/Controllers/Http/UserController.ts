@@ -126,10 +126,10 @@ export default class UsersController {
      */
     public async createRestorer({ request , response }:HttpContextContract){
         try {
-            const user = await User.create({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],user_password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:request.body()['user_is_supported'],user_support:request.body()['user_support'],user_is_delivery:false});
+            const user = await User.create({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],user_password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number'], user_is_supported:false,user_support:false,user_is_delivery:false});
             const role = await Role.findOrFail(3)
             await user.related('role').associate(role)
-            const restorer = await Restorer.create(request.body()['restorer_name'])
+            const restorer = await Restorer.create({restorer_name : request.body()['restorer_name']})
             const address = await Address.create({address_city: request.body()['restorer_address_city'], address_street: request.body()['restorer_address_street'], address_street_number: request.body()['restorer_address_street_number'], address_postal_code:request.body()['restorer_address_postal_code'] })
             await restorer.related('address').associate(address)
             await user.related('restorer').associate(restorer)

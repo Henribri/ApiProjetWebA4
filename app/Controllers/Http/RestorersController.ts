@@ -8,13 +8,8 @@ import jwt from 'jsonwebtoken'
 export default class RestorersController {
     public async index ({response,request}:HttpContextContract){
         try{
-            const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'])
-            if (user.role.role_id == 5 || user.role.role_id == 4){
-                const restorers = await Restorer.query()
-                return response.status(200).json({restorers})
-            }else{
-                return response.status(403).json({message:'error wrong user permission'})
-            }
+            const restorers = await Restorer.query()
+            return response.status(200).json({restorers})
 
         }catch(err){
             return response.status(500).json({err})
