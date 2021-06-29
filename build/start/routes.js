@@ -10,7 +10,7 @@ Route_1.default.group(() => {
     Route_1.default.get('address/:type', 'AddressesController.getById');
     Route_1.default.delete('address/:type', 'AddressesController.delete');
     Route_1.default.put('address/:type', 'AddressesController.update');
-});
+}).middleware('auth');
 Route_1.default.group(() => {
     Route_1.default.post('creditCard', 'CreditCardsController.create');
     Route_1.default.get('creditCards', 'CreditCardsController.index');
@@ -27,6 +27,7 @@ Route_1.default.group(() => {
 }).middleware('auth');
 Route_1.default.group(() => {
     Route_1.default.post('user/client', 'UserController.createClient');
+    Route_1.default.get('restorers', 'RestorersController.index');
     Route_1.default.post('user/delivery', 'UserController.createDelivery');
     Route_1.default.post('user/restorer', 'UserController.createRestorer');
     Route_1.default.get('restorers', 'RestorersController.index');
