@@ -8,7 +8,7 @@ class MongoProvider {
     register() {
         const mongoose = new mongoose_1.Mongoose();
         mongoose.connect('mongodb+srv://Geralt:Ciri@' +
-            'corbeilleexo.tag2v.mongodb.net:/A4L', { useNewUrlParser: true, useUnifiedTopology: true });
+            'corbeilleexo.tag2v.mongodb.net:/Apollon', { useNewUrlParser: true, useUnifiedTopology: true });
         this.app.container.singleton('Mongoose', () => mongoose);
     }
     async boot() {

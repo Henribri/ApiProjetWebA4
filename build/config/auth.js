@@ -27,13 +27,13 @@ const authConfig = {
             tokenProvider: {
                 type: 'api',
                 driver: 'database',
-                table: 'api_tokens',
+                table: 'refresh_tokens',
                 foreignKey: 'user_id',
             },
             provider: {
                 driver: 'lucid',
-                identifierKey: 'id',
-                uids: ['email'],
+                identifierKey: 'user_id',
+                uids: ['user_email'],
                 model: () => Promise.resolve().then(() => __importStar(global[Symbol.for('ioc.use')]('App/Models/User'))),
             },
         },

@@ -1,3 +1,5 @@
+import Hash from '@ioc:Adonis/Core/Hash'
+import User from 'App/Models/User';
 import jwt from 'jsonwebtoken'
 
 export default class AuthController {
@@ -20,9 +22,12 @@ export default class AuthController {
         const password = request.input('password')
         try {
 
+          const user = await User.findBy('user_email' ,email)
+
+          if(user && await Hash.verify(user?.password,password)){
             // Generate token
             const token =  jwt.sign({
-            data: 'foobar'
+            user_id: user.user_id
             }, 'TOKEN_PRIVATE_KEY', { expiresIn: '30m' });
 
             // Generate refresh token
@@ -30,11 +35,14 @@ export default class AuthController {
             expiresIn:'1days'
             })
 
+
             // Give the token to the client
             return {token, refresh_token}
+          }
+          return response.badRequest('Invalid email or password')
 
-        } catch {
-            return response.badRequest('Invalid credentials')
+        } catch (err){
+          return response.badRequest('Invalid credentials')
         }
     }
 
@@ -51,8 +59,10 @@ export default class AuthController {
         try {
           // Check refresh token and give an acces token
           const refreshToken = await auth.use('api').authenticate()
-      
-          if (refreshToken) return jwt.sign({ data: 'foobar' }, 'TOKEN_PRIVATE_KEY', { expiresIn: '30m' });
+
+          const user_id=refreshToken.$attributes.user_id
+          
+          if (refreshToken) return jwt.sign({ user_id: user_id }, 'TOKEN_PRIVATE_KEY', { expiresIn: '30m' });
         
         }catch{
           return response.badRequest('Invalid credentials')

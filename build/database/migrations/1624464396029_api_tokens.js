@@ -4,24 +4,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Schema_1 = __importDefault(global[Symbol.for('ioc.use')]("Adonis/Lucid/Schema"));
-class UsersSchema extends Schema_1.default {
+class RefreshTokens extends Schema_1.default {
     constructor() {
         super(...arguments);
-        this.tableName = 'users';
+        this.tableName = 'refresh_tokens';
     }
     async up() {
         this.schema.createTable(this.tableName, (table) => {
             table.increments('id').primary();
-            table.string('email', 255).notNullable();
-            table.string('password', 180).notNullable();
-            table.string('remember_me_token').nullable();
+            table.integer('user_id').unsigned().references('user_id').inTable('users').onDelete('CASCADE');
+            table.string('name').notNullable();
+            table.string('type').notNullable();
+            table.string('token', 64).notNullable().unique();
+            table.timestamp('expires_at', { useTz: true }).nullable();
             table.timestamp('created_at', { useTz: true }).notNullable();
-            table.timestamp('updated_at', { useTz: true }).notNullable();
         });
     }
     async down() {
         this.schema.dropTable(this.tableName);
     }
 }
-exports.default = UsersSchema;
-//# sourceMappingURL=1623878283942_users.js.map
+exports.default = RefreshTokens;
+//# sourceMappingURL=1624464396029_api_tokens.js.map
