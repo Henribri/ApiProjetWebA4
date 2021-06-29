@@ -118,8 +118,6 @@ export default class UsersController {
             }else{
                 return response.status(400).json({message: "email already taken", code:"email"})
             }
-
-
         }catch(err){
             return response.status(500).json({err})
         }
