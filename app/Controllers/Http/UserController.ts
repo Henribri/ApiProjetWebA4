@@ -50,13 +50,8 @@ export default class UsersController {
      */
     public async getById ({params,response, request}:HttpContextContract){
         try{
-            if (jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'] == params.id){
-                const user = await User.findOrFail(params.id);
-                return response.status(200).json({user})
-            }else{
-                return response.status(403).json({message: "Error wrong user ID"})
-            }
-
+            const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id']);
+            return response.status(200).json({user})
         }catch(err){
             return response.status(500).json({err})
         }
@@ -155,8 +150,6 @@ export default class UsersController {
             }else{
                 return response.status(400).json({message: "email already taken", code:"email"})
             }
-
-
         }catch(err){
             return response.status(500).json({err})
         }
@@ -170,20 +163,13 @@ export default class UsersController {
      * @apiParam {Integer} user_id Id of the user.
      * @apiSuccess {Object} user object.
      * @apiError (500) Error Error to request database.
-     * @apiError (403) Error Wrong user ID.
      */
     public async update ({request, response, params}:HttpContextContract){
         try {
-            if (jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'] == params.id){
-                const user = await User.findOrFail(params.id);
-                user.merge({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number']});
-                await user.save();
-                return response.status(200).json({user})
-            }else{
-                return response.status(403).json({message: "Error wrong user ID"})
-            }
-
-
+            const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id']);
+            user.merge({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number']});
+            await user.save();
+            return response.status(200).json({user})
         }catch(err){
             return response.status(500).json({err})
         }
@@ -197,35 +183,29 @@ export default class UsersController {
      * @apiParam {Integer} user_id Id of the user.
      * @apiSuccess {Object} user object.
      * @apiError (500) Error Error to request database.
-     * @apiError (403) Error Wrong user ID.
      * @apiError (400) error this user is already supported or you enter the wrong email
      * @apiError (400) error Unable to find the user or the user is already supporting someone
      */
      public async updateSponsor ({request, response, params}:HttpContextContract){
         try {
-            if (jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'] == params.id){
-                const user = await User.findOrFail(params.id);
-                const filleul = await User.findBy('user_email', request.body()['filleul_email'])
-                if (user.user_support==false && filleul && user.fk_role_id == filleul.fk_role_id){
-                    if (filleul.user_is_supported == false){
-                        user.user_support = true;
-                        await user.save();
-                        filleul.user_is_supported = true;
-                        await filleul.save();
-                    }else{
-                        return response.status(400).json({message: "error this user is already supported or you enter the wrong email"})
-                    }
-                    return response.status(200).json({user})
+            const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id']);
+            const filleul = await User.findBy('user_email', request.body()['filleul_email'])
+            if (user.user_support==false && filleul && user.fk_role_id == filleul.fk_role_id){
+                if (filleul.user_is_supported == false){
+                    user.user_support = true;
+                    await user.save();
+                    filleul.user_is_supported = true;
+                    await filleul.save();
                 }else{
-                    return response.status(400).json({message: "error Unable to find the user or the user is already supporting someone"})
+                    return response.status(400).json({message: "error this user is already supported or you enter the wrong email"})
                 }
+                return response.status(200).json({user})
             }else{
-                return response.status(403).json({message: "Error wrong user ID"})
+                return response.status(400).json({message: "error Unable to find the user or the user is already supporting someone"})
             }
         }catch(err){
             return response.status(500).json({err})
         }
-
     }
 
     /**
@@ -239,16 +219,11 @@ export default class UsersController {
      */
     public async delete({response,request, params}:HttpContextContract){
         try{
-            if (jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'] == params.id){
-                const user = await User.findOrFail(params.id);
+                const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id']);
                 await user.delete();
                 return response.status(200).json({user})
-            }else{
-                return response.status(403).json({message: "Error wrong user ID"})
-            }
-
         }catch(err){
-            return response.status(500).json({err})
+            return response.status(500).json({err: err, message:"wrong user"})
         }
 
     }

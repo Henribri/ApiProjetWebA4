@@ -22,16 +22,15 @@ Route.group(()=>{
 
 /* Groupe de route pour la manipulation des utilisateurs */
 Route.group(()=>{
-    Route.get('user','UserController.index')
-    Route.get('user/:id', 'UserController.getById')
-    Route.delete('user/:id','UserController.delete')
-    Route.put('user/:id','UserController.update')
-    Route.put('user/support/:id','UserController.updateSponsor')
+    Route.get('users','UserController.index')
+    Route.get('user', 'UserController.getById')
+    Route.delete('user','UserController.delete')
+    Route.put('user','UserController.update')
+    Route.put('user/support','UserController.updateSponsor')
 }).middleware('auth')
 
 Route.group(()=>{
     Route.post('user/client', 'UserController.createClient')
-    Route.get('restorers','RestorersController.index')
     Route.post('user/delivery', 'UserController.createDelivery')
     Route.post('user/restorer', 'UserController.createRestorer')
     Route.get('restorers','RestorersController.index')
