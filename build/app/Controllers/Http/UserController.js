@@ -30,15 +30,10 @@ class UsersController {
             return response.status(500).json({ err });
         }
     }
-    async getById({ params, response, request }) {
+    async getById({ response, request }) {
         try {
-            if (jsonwebtoken_1.default.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'] == params.id) {
-                const user = await User_1.default.findOrFail(params.id);
-                return response.status(200).json({ user });
-            }
-            else {
-                return response.status(403).json({ message: "Error wrong user ID" });
-            }
+            const user = await User_1.default.findOrFail(jsonwebtoken_1.default.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id']);
+            return response.status(200).json({ user });
         }
         catch (err) {
             return response.status(500).json({ err });
@@ -111,64 +106,49 @@ class UsersController {
             return response.status(500).json({ err });
         }
     }
-    async update({ request, response, params }) {
+    async update({ request, response }) {
         try {
-            if (jsonwebtoken_1.default.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'] == params.id) {
-                const user = await User_1.default.findOrFail(params.id);
-                user.merge({ user_firstname: request.body()['user_firstname'], user_lastname: request.body()['user_lastname'], user_email: request.body()['user_email'], password: request.body()['user_password'], user_phone_number: request.body()['user_phone_number'] });
-                await user.save();
-                return response.status(200).json({ user });
-            }
-            else {
-                return response.status(403).json({ message: "Error wrong user ID" });
-            }
+            const user = await User_1.default.findOrFail(jsonwebtoken_1.default.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id']);
+            user.merge({ user_firstname: request.body()['user_firstname'], user_lastname: request.body()['user_lastname'], user_email: request.body()['user_email'], password: request.body()['user_password'], user_phone_number: request.body()['user_phone_number'] });
+            await user.save();
+            return response.status(200).json({ user });
         }
         catch (err) {
             return response.status(500).json({ err });
         }
     }
-    async updateSponsor({ request, response, params }) {
+    async updateSponsor({ request, response }) {
         try {
-            if (jsonwebtoken_1.default.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'] == params.id) {
-                const user = await User_1.default.findOrFail(params.id);
-                const filleul = await User_1.default.findBy('user_email', request.body()['filleul_email']);
-                if (user.user_support == false && filleul && user.fk_role_id == filleul.fk_role_id) {
-                    if (filleul.user_is_supported == false) {
-                        user.user_support = true;
-                        await user.save();
-                        filleul.user_is_supported = true;
-                        await filleul.save();
-                    }
-                    else {
-                        return response.status(400).json({ message: "error this user is already supported or you enter the wrong email" });
-                    }
-                    return response.status(200).json({ user });
+            const user = await User_1.default.findOrFail(jsonwebtoken_1.default.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id']);
+            const filleul = await User_1.default.findBy('user_email', request.body()['filleul_email']);
+            if (user.user_support == false && filleul && user.fk_role_id == filleul.fk_role_id) {
+                if (filleul.user_is_supported == false) {
+                    user.user_support = true;
+                    await user.save();
+                    filleul.user_is_supported = true;
+                    await filleul.save();
                 }
                 else {
-                    return response.status(400).json({ message: "error Unable to find the user or the user is already supporting someone" });
+                    return response.status(400).json({ message: "error this user is already supported or you enter the wrong email" });
                 }
+                return response.status(200).json({ user });
             }
             else {
-                return response.status(403).json({ message: "Error wrong user ID" });
+                return response.status(400).json({ message: "error Unable to find the user or the user is already supporting someone" });
             }
         }
         catch (err) {
             return response.status(500).json({ err });
         }
     }
-    async delete({ response, request, params }) {
+    async delete({ response, request }) {
         try {
-            if (jsonwebtoken_1.default.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'] == params.id) {
-                const user = await User_1.default.findOrFail(params.id);
-                await user.delete();
-                return response.status(200).json({ user });
-            }
-            else {
-                return response.status(403).json({ message: "Error wrong user ID" });
-            }
+            const user = await User_1.default.findOrFail(jsonwebtoken_1.default.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id']);
+            await user.delete();
+            return response.status(200).json({ user });
         }
         catch (err) {
-            return response.status(500).json({ err });
+            return response.status(500).json({ err: err, message: "wrong user" });
         }
     }
 }

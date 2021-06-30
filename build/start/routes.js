@@ -19,15 +19,14 @@ Route_1.default.group(() => {
     Route_1.default.put('creditCard', 'CreditCardsController.update');
 }).middleware('auth');
 Route_1.default.group(() => {
-    Route_1.default.get('user', 'UserController.index');
-    Route_1.default.get('user/:id', 'UserController.getById');
-    Route_1.default.delete('user/:id', 'UserController.delete');
-    Route_1.default.put('user/:id', 'UserController.update');
-    Route_1.default.put('user/support/:id', 'UserController.updateSponsor');
+    Route_1.default.get('users', 'UserController.index');
+    Route_1.default.get('user', 'UserController.getById');
+    Route_1.default.delete('user', 'UserController.delete');
+    Route_1.default.put('user', 'UserController.update');
+    Route_1.default.put('user/support', 'UserController.updateSponsor');
 }).middleware('auth');
 Route_1.default.group(() => {
     Route_1.default.post('user/client', 'UserController.createClient');
-    Route_1.default.get('restorers', 'RestorersController.index');
     Route_1.default.post('user/delivery', 'UserController.createDelivery');
     Route_1.default.post('user/restorer', 'UserController.createRestorer');
     Route_1.default.get('restorers', 'RestorersController.index');

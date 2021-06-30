@@ -48,7 +48,7 @@ export default class UsersController {
      * @apiError (500) Error Error to request database.
      * @apiError (403) Error Error wrong user ID.
      */
-    public async getById ({params,response, request}:HttpContextContract){
+    public async getById ({response, request}:HttpContextContract){
         try{
             const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id']);
             return response.status(200).json({user})
@@ -162,7 +162,7 @@ export default class UsersController {
      * @apiSuccess {Object} user object.
      * @apiError (500) Error Error to request database.
      */
-    public async update ({request, response, params}:HttpContextContract){
+    public async update ({request, response}:HttpContextContract){
         try {
             const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id']);
             user.merge({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number']});
@@ -184,7 +184,7 @@ export default class UsersController {
      * @apiError (400) error this user is already supported or you enter the wrong email
      * @apiError (400) error Unable to find the user or the user is already supporting someone
      */
-     public async updateSponsor ({request, response, params}:HttpContextContract){
+     public async updateSponsor ({request, response}:HttpContextContract){
         try {
             const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id']);
             const filleul = await User.findBy('user_email', request.body()['filleul_email'])
@@ -215,7 +215,7 @@ export default class UsersController {
      * @apiError (500) Error Error to request database.
      * @apiError (403) Wrong user ID.
      */
-    public async delete({response,request, params}:HttpContextContract){
+    public async delete({response,request}:HttpContextContract){
         try{
                 const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id']);
                 await user.delete();
