@@ -17,22 +17,27 @@ export default class UsersController {
      * @apiSuccess {Object} user object.
      * @apiError (500) Error Error to request database.
      * @apiError (403) Error you don't have permission.
+     * @apiError (400) wrong user.
      */
     public async index ({response,request}:HttpContextContract){
         try{
-            const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id'])
-            if (user.role.role_id == 5 || user.role.role_id == 4){
-                const users = await User.query()
-                .preload('role')
-                .preload('credit_card')
-                .preload('delivery_address_id')
-                .preload('payment_address_id')
-                .preload('restorer')
-                return response.status(200).json({users})
+            const user_id = this.getId(request)
+            if (user_id){
+                const user = await User.findOrFail(user_id)
+                if (user.role.role_id == 5 || user.role.role_id == 4){
+                    const users = await User.query()
+                    .preload('role')
+                    .preload('credit_card')
+                    .preload('delivery_address_id')
+                    .preload('payment_address_id')
+                    .preload('restorer')
+                    return response.status(200).json({users})
+                }else{
+                    return response.status(403).json({message: "Error you don't have the correct permissions"})
+                }
             }else{
-                return response.status(403).json({message: "Error you don't have the correct permissions"})
+                return response.status(500).json({err:"jwt token error"})
             }
-
         }catch(err){
             return response.status(500).json({err})
         }
@@ -48,10 +53,17 @@ export default class UsersController {
      * @apiError (500) Error Error to request database.
      * @apiError (403) Error Error wrong user ID.
      */
-    public async getById ({response, request}:HttpContextContract){
+    public async getById ({response,request,params}:HttpContextContract){
         try{
-            const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id']);
-            return response.status(200).json({user})
+            const user_id = this.getId(request)
+            console.log(user_id)
+            if (user_id){
+                const user = await User.findBy('user_id',user_id)
+                console.log(user)
+                return response.status(200).json({user})
+            }else{
+                return response.status(500).json({err:"jwt token error"})
+            }
         }catch(err){
             return response.status(500).json({err})
         }
@@ -164,10 +176,17 @@ export default class UsersController {
      */
     public async update ({request, response}:HttpContextContract){
         try {
-            const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id']);
-            user.merge({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number']});
-            await user.save();
-            return response.status(200).json({user})
+            const user_id = this.getId(request)
+            if (user_id){
+                const user = await User.findOrFail(user_id)
+                user.merge({user_firstname:request.body()['user_firstname'],user_lastname:request.body()['user_lastname'],user_email:request.body()['user_email'],password:request.body()['user_password'],user_phone_number:request.body()['user_phone_number']});
+                await user.save();
+                return response.status(200).json({user})
+            }else{
+                return response.status(500).json({err:"jwt token error"})
+            }
+
+
         }catch(err){
             return response.status(500).json({err})
         }
@@ -186,20 +205,25 @@ export default class UsersController {
      */
      public async updateSponsor ({request, response}:HttpContextContract){
         try {
-            const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id']);
-            const filleul = await User.findBy('user_email', request.body()['filleul_email'])
-            if (user.user_support==false && filleul && user.fk_role_id == filleul.fk_role_id){
-                if (filleul.user_is_supported == false){
-                    user.user_support = true;
-                    await user.save();
-                    filleul.user_is_supported = true;
-                    await filleul.save();
+            const user_id = this.getId(request)
+            if (user_id){
+                const user = await User.findOrFail(user_id)
+                const filleul = await User.findBy('user_email', request.body()['filleul_email'])
+                if (user.user_support==false && filleul && user.fk_role_id == filleul.fk_role_id){
+                    if (filleul.user_is_supported == false){
+                        user.user_support = true;
+                        await user.save();
+                        filleul.user_is_supported = true;
+                        await filleul.save();
+                    }else{
+                        return response.status(400).json({message: "error this user is already supported or you enter the wrong email"})
+                    }
+                    return response.status(200).json({user})
                 }else{
-                    return response.status(400).json({message: "error this user is already supported or you enter the wrong email"})
+                    return response.status(400).json({message: "error Unable to find the user or the user is already supporting someone"})
                 }
-                return response.status(200).json({user})
             }else{
-                return response.status(400).json({message: "error Unable to find the user or the user is already supporting someone"})
+                return response.status(500).json({err:"jwt token error"})
             }
         }catch(err){
             return response.status(500).json({err})
@@ -217,11 +241,28 @@ export default class UsersController {
      */
     public async delete({response,request}:HttpContextContract){
         try{
-                const user = await User.findOrFail(jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY')['user_id']);
+            const user_id = this.getId(request)
+            if (user_id){
+                const user = await User.findOrFail(user_id)
                 await user.delete();
                 return response.status(200).json({user})
+            }else{
+                return response.status(500).json({err:"jwt token error"})
+            }
         }catch(err){
             return response.status(500).json({err: err, message:"wrong user"})
+        }
+
+    }
+
+    public  getId(request){
+        const token =  request.header('authorization')?.split(" ")
+        try{
+            let user_id =  jwt.verify(token[1], 'TOKEN_PRIVATE_KEY')['user_id']
+            console.log(user_id)
+            return user_id
+        }catch{
+            return false
         }
 
     }
