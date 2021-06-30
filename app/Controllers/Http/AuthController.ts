@@ -79,6 +79,7 @@ export default class AuthController {
      */
 
     public async checkAuth({request}){
-        return jwt.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY');
+        const token = request.header('authorization').split(" ")
+        return jwt.verify(token[1], 'TOKEN_PRIVATE_KEY');
     }
 }
