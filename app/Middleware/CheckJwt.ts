@@ -1,13 +1,13 @@
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import jwt from 'jsonwebtoken'
 
 export default class CheckJwt {
 
 
-  public async handle ({request, response}: HttpContextContract, next: () => Promise<void>) {   
-    await jwt.verify(request.input('jwt'), "TOKEN_PRIVATE_KEY", function(err, decoded) {
+  public async handle ({request, response}, next: () => Promise<void>) {   
+    const token = request.header('authorization').split(" ")
+     await jwt.verify(token[1], "TOKEN_PRIVATE_KEY", async function(err) {
       if(err)return response.unauthorized("JWT Token error")
-      next()
+      await next()
     });
 
   } 

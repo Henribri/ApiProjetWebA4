@@ -1,6 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Command from "App/Models/Command";
-
+import jwt from 'jsonwebtoken'
 
 
 export default class CommandsController {
@@ -123,9 +123,11 @@ export default class CommandsController {
      * @apiSuccess {Object[]} list_command Historic of commands.
      * @apiError (502) Error Error to request database.
      */
-    public async getHistoricCommand ({request, response}:HttpContextContract){
+    public async getHistoricCommand ({request, response}){
         try{
-            return await Command.find({'client.id':request.input('client_id')})
+            const token = request.header('authorization').split(" ")
+            const user_id=jwt.verify(token[1], "TOKEN_PRIVATE_KEY").user_id
+            return response.send(await Command.find({'info.client.user_id':user_id}))
         }catch(err){
             return response.status(502)
         }
