@@ -7,7 +7,7 @@ export default class CommandsController {
 
 
     /** 
-     * @api {get} /get_command Request command information.
+     * @api {get} /command Request command information.
      * @apiName getCommand
      * @apigroup Command
      * @apiParam {String} command_id Id of command.
@@ -23,9 +23,10 @@ export default class CommandsController {
     }
 
     /**
-     * @api {post} /create_command Create a new Command.
+     * @api {post} /command Create a new Command.
      * @apiName createCommand
      * @apiGroup Command
+     * @apiParam (Authorization){String} Bearer Token value in authorisation Bearer.
      * @apiParam (Body) {Object} command Command object.
      * @apiSuccess response Command created.
      * @apiError (502) Error Error to request database.
@@ -45,6 +46,7 @@ export default class CommandsController {
      * @apiName editCommand
      * @apiGroup Command
      * @apiParam {String} command_id Id of command.
+     * @apiParam (Authorization){String} Bearer Token value in authorisation Bearer.
      * @apiParam (Body) {Object} command Command object.
      * @apiSuccess response Command edited.
      * @apiError (502) Error Error to request database.
@@ -63,6 +65,7 @@ export default class CommandsController {
      * @apiName deleteCommand
      * @apiGroup Command
      * @apiParam {String} command_id Id of command.
+     * @apiParam (Authorization){String} Bearer Token value in authorisation Bearer.
      * @apiSuccess response Command deleted.
      * @apiError (502) Error Error to request database.
      */
@@ -81,6 +84,7 @@ export default class CommandsController {
      * @apiName payCommand
      * @apiGroup Command
      * @apiParam {String} command_id Id of command.
+     * @apiParam (Authorization){String} Bearer Token value in authorisation Bearer.
      * @apiSuccess response Command paid.
      * @apiError (502) Error Error to request database.
      */
@@ -99,6 +103,7 @@ export default class CommandsController {
          * @apiName validateCommand
          * @apiGroup Command
          * @apiParam {String} command_id Id of command.
+         * @apiParam (Authorization){String} Bearer Token value in authorisation Bearer.
          * @apiSuccess response Command validated.
          * @apiError (502) Error Error to request database.
          */
@@ -138,6 +143,7 @@ export default class CommandsController {
      * @api {delete} /delete_historic_command Delete Commands historic.
      * @apiName deleteHistoricCommand
      * @apiGroup Command
+     * @apiParam (Authorization){String} Bearer Token value in authorisation Bearer.
      * @apiParam (Body) {String[]} list_command_id List of id of command.
      * @apiSuccess response Historic deleted.
      * @apiError (502) Error Error to request database.

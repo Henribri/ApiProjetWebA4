@@ -1,12 +1,21 @@
 define({ "api": [
   {
     "type": "post",
-    "url": "/create_command",
+    "url": "/command",
     "title": "Create a new Command.",
     "name": "createCommand",
     "group": "Command",
     "parameter": {
       "fields": {
+        "Authorization": [
+          {
+            "group": "Authorization",
+            "type": "String",
+            "optional": false,
+            "field": "Bearer",
+            "description": "<p>Token value in authorisation Bearer.</p>"
+          }
+        ],
         "Body": [
           {
             "group": "Body",
@@ -62,6 +71,15 @@ define({ "api": [
             "field": "command_id",
             "description": "<p>Id of command.</p>"
           }
+        ],
+        "Authorization": [
+          {
+            "group": "Authorization",
+            "type": "String",
+            "optional": false,
+            "field": "Bearer",
+            "description": "<p>Token value in authorisation Bearer.</p>"
+          }
         ]
       }
     },
@@ -101,6 +119,15 @@ define({ "api": [
     "group": "Command",
     "parameter": {
       "fields": {
+        "Authorization": [
+          {
+            "group": "Authorization",
+            "type": "String",
+            "optional": false,
+            "field": "Bearer",
+            "description": "<p>Token value in authorisation Bearer.</p>"
+          }
+        ],
         "Body": [
           {
             "group": "Body",
@@ -157,6 +184,15 @@ define({ "api": [
             "description": "<p>Id of command.</p>"
           }
         ],
+        "Authorization": [
+          {
+            "group": "Authorization",
+            "type": "String",
+            "optional": false,
+            "field": "Bearer",
+            "description": "<p>Token value in authorisation Bearer.</p>"
+          }
+        ],
         "Body": [
           {
             "group": "Body",
@@ -198,7 +234,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/get_command",
+    "url": "/command",
     "title": "Request command information.",
     "name": "getCommand",
     "group": "Command",
@@ -308,6 +344,15 @@ define({ "api": [
             "field": "command_id",
             "description": "<p>Id of command.</p>"
           }
+        ],
+        "Authorization": [
+          {
+            "group": "Authorization",
+            "type": "String",
+            "optional": false,
+            "field": "Bearer",
+            "description": "<p>Token value in authorisation Bearer.</p>"
+          }
         ]
       }
     },
@@ -354,6 +399,15 @@ define({ "api": [
             "optional": false,
             "field": "command_id",
             "description": "<p>Id of command.</p>"
+          }
+        ],
+        "Authorization": [
+          {
+            "group": "Authorization",
+            "type": "String",
+            "optional": false,
+            "field": "Bearer",
+            "description": "<p>Token value in authorisation Bearer.</p>"
           }
         ]
       }
