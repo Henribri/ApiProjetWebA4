@@ -23,19 +23,19 @@ __decorate([
     __metadata("design:type", Number)
 ], Address.prototype, "address_id", void 0);
 __decorate([
-    Orm_1.column({ serializeAs: null }),
+    Orm_1.column(),
     __metadata("design:type", String)
 ], Address.prototype, "address_city", void 0);
 __decorate([
-    Orm_1.column({ serializeAs: null }),
+    Orm_1.column(),
     __metadata("design:type", String)
 ], Address.prototype, "address_street", void 0);
 __decorate([
-    Orm_1.column({ serializeAs: null }),
+    Orm_1.column(),
     __metadata("design:type", Number)
 ], Address.prototype, "address_street_number", void 0);
 __decorate([
-    Orm_1.column({ serializeAs: null }),
+    Orm_1.column(),
     __metadata("design:type", Number)
 ], Address.prototype, "address_postal_code", void 0);
 __decorate([

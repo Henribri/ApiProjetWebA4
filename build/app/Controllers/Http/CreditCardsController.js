@@ -46,7 +46,7 @@ class CreditCardsController {
             }
         }
         catch (err) {
-            return response.status(500).json({ err });
+            return response.status(404).json("not found");
         }
     }
     async create({ request, response }) {

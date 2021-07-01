@@ -14,7 +14,7 @@ class AddressesController {
                 const user = await User_1.default.findOrFail(user_id);
                 if (user.role.role_id == 5 || user.role.role_id == 4) {
                     const addresses = await Address_1.default.query();
-                    return response.status(200).json({ addresses });
+                    return response.status(200).json(addresses);
                 }
                 else {
                     return response.status(403).json({ message: "Error you don't have the correct permissions" });
@@ -35,21 +35,22 @@ class AddressesController {
                 const user = await User_1.default.findOrFail(user_id);
                 if (params.type == 'payment' && user.fk_payment_address_id != null) {
                     const address = await Address_1.default.findOrFail(user.fk_payment_address_id);
-                    return response.status(200).json({ address });
+                    console.log('test');
+                    return response.status(200).json(address);
                 }
                 else if (user.fk_payment_address_id == null) {
                     return response.status(400).json({ message: 'This user does not have a payment address yet create it instead' });
                 }
                 if (params.type == 'delivery' && user.fk_delivery_address_id != null) {
                     const address = await Address_1.default.findOrFail(user.fk_payment_address_id);
-                    return response.status(200).json({ address });
+                    return response.status(200).json(address);
                 }
                 else if (user.fk_delivery_address_id == null) {
                     return response.status(400).json({ message: 'This user does not have a payment address yet create it instead' });
                 }
                 if (params.type == 'restorer' && user.fk_restorer_id != null) {
                     const address = await Address_1.default.findOrFail(user.restorer.fk_address_id);
-                    return response.status(200).json({ address });
+                    return response.status(200).json(address);
                 }
                 else if (user.fk_restorer_id == null) {
                     return response.status(400).json({ message: 'This user does not have a restorer yet create it instead' });
@@ -66,7 +67,7 @@ class AddressesController {
             }
         }
         catch (err) {
-            return response.status(500).json({ err });
+            return response.status(404).json('not found');
         }
     }
     async create({ request, response, params }) {

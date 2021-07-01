@@ -7,10 +7,10 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 class CheckJwt {
     async handle({ request, response }, next) {
         const token = request.header('authorization').split(" ");
-        await jsonwebtoken_1.default.verify(token[1], "TOKEN_PRIVATE_KEY", function (err) {
+        await jsonwebtoken_1.default.verify(token[1], "TOKEN_PRIVATE_KEY", async function (err) {
             if (err)
                 return response.unauthorized({ message: "JWT Token error", error: err });
-            next();
+            await next();
         });
     }
 }
