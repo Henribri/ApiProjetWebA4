@@ -53,7 +53,7 @@ export default class UsersController {
      * @apiError (500) Error Error to request database.
      * @apiError (403) Error Error wrong user ID.
      */
-    public async getById ({response,request,params}:HttpContextContract){
+    public async getById ({response,request}:HttpContextContract){
         try{
             const user_id = this.getId(request)
             console.log(user_id)

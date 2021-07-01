@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 class CheckJwt {
     async handle({ request, response }, next) {
-        await jsonwebtoken_1.default.verify(request.input('jwt'), "TOKEN_PRIVATE_KEY", function (err) {
+        const token = request.header('authorization').split(" ");
+        await jsonwebtoken_1.default.verify(token[1], "TOKEN_PRIVATE_KEY", function (err) {
             if (err)
                 return response.unauthorized({ message: "JWT Token error", error: err });
             next();

@@ -10,21 +10,21 @@ Route_1.default.group(() => {
     Route_1.default.get('address/:type', 'AddressesController.getById');
     Route_1.default.delete('address/:type', 'AddressesController.delete');
     Route_1.default.put('address/:type', 'AddressesController.update');
-}).middleware('auth');
+});
 Route_1.default.group(() => {
     Route_1.default.post('creditCard', 'CreditCardsController.create');
     Route_1.default.get('creditCards', 'CreditCardsController.index');
     Route_1.default.get('creditCard', 'CreditCardsController.getById');
     Route_1.default.delete('creditCard', 'CreditCardsController.delete');
     Route_1.default.put('creditCard', 'CreditCardsController.update');
-}).middleware('auth');
+});
 Route_1.default.group(() => {
     Route_1.default.get('users', 'UserController.index');
     Route_1.default.get('user', 'UserController.getById');
     Route_1.default.delete('user', 'UserController.delete');
     Route_1.default.put('user', 'UserController.update');
     Route_1.default.put('user/support', 'UserController.updateSponsor');
-}).middleware('auth');
+});
 Route_1.default.group(() => {
     Route_1.default.post('user/client', 'UserController.createClient');
     Route_1.default.post('user/delivery', 'UserController.createDelivery');
@@ -36,7 +36,7 @@ Route_1.default.group(() => {
     Route_1.default.get('restorer', 'RestorersController.getById');
     Route_1.default.delete('restorer', 'RestorersController.delete');
     Route_1.default.put('restorer', 'RestorersController.update');
-}).middleware('auth');
+});
 Route_1.default.get('', () => {
     return '';
 });
