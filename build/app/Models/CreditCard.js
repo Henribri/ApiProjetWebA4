@@ -23,11 +23,11 @@ __decorate([
     __metadata("design:type", Number)
 ], PayMethod.prototype, "credit_card_id", void 0);
 __decorate([
-    Orm_1.column({ serializeAs: null }),
+    Orm_1.column(),
     __metadata("design:type", String)
 ], PayMethod.prototype, "credit_card_type", void 0);
 __decorate([
-    Orm_1.column({ serializeAs: null }),
+    Orm_1.column(),
     __metadata("design:type", Number)
 ], PayMethod.prototype, "credit_card_num", void 0);
 __decorate([
