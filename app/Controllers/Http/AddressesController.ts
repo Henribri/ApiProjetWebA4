@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 
 import Address from "App/Models/Address";
 import User from 'App/Models/User';
+import Restorer from 'App/Models/Restorer';
 
 export default class AddressesController {
 
@@ -48,8 +49,10 @@ export default class AddressesController {
     public async getById ({params,response,request}:HttpContextContract){
         try{
             const user_id = this.getId(request)
+
             if (user_id){
                 const user = await User.findOrFail(user_id)
+
                 if (params.type=='payment' && user.fk_payment_address_id!=null){
                     const address = await Address.findOrFail(user.fk_payment_address_id);
                     console.log('test')
@@ -66,7 +69,8 @@ export default class AddressesController {
                 }
 
                 if(params.type=='restorer' && user.fk_restorer_id!=null){
-                    const address = await Address.findOrFail(user.restorer.fk_address_id);
+                    const restorer = await Restorer.findOrFail(user.fk_restorer_id)
+                    const address = await Address.findOrFail(restorer.fk_address_id);
                     return response.status(200).json(address)
                 }else if(params.type=='restorer' &&  user.fk_restorer_id==null){
                     return response.status(400).json({message : 'This user does not have a restorer yet create it instead'})
@@ -128,6 +132,7 @@ export default class AddressesController {
     public async update({request, response, params}:HttpContextContract){
         try {
             const user_id = this.getId(request)
+
             if (user_id){
                 const user = await User.findOrFail(user_id)
                 if (params.type=='payment' && user.fk_payment_address_id!=null){
@@ -135,7 +140,7 @@ export default class AddressesController {
                     address.merge(request.body());
                     await address.save();
                     return response.status(200).json({address})
-                }else if(user.fk_payment_address_id==null){
+                }else if(params.type=='payment' && user.fk_payment_address_id==null){
                     return response.status(400).json({message : 'This user does not have a payment address yet create it instead'})
                 }
 
@@ -144,16 +149,17 @@ export default class AddressesController {
                     address.merge(request.body());
                     await address.save();
                     return response.status(200).json({address})
-                }else if(user.fk_delivery_address_id==null){
+                }else if(params.type=='delivery' && user.fk_delivery_address_id==null){
                     return response.status(400).json({message : 'This user does not have a payment address yet create it instead'})
                 }
 
                 if(params.type=='restorer' && user.fk_restorer_id!=null){
-                    const address = await Address.findOrFail(user.restorer.fk_address_id);
+                    const restorer = await Restorer.findOrFail(user.fk_restorer_id)
+                    const address = await Address.findOrFail(restorer.fk_address_id);
                     address.merge(request.body());
                     await address.save();
                     return response.status(200).json({address})
-                }else if(user.fk_restorer_id==null){
+                }else if(params.type=='restorer' && user.fk_restorer_id==null){
                     return response.status(400).json({message : 'This user does not have a restorer yet create it instead'})
                 }
 
@@ -180,7 +186,7 @@ export default class AddressesController {
                     const address = await Address.findOrFail(user.fk_payment_address_id);
                     await address.delete();
                     return response.status(200).json({address})
-                }else if(user.fk_payment_address_id==null){
+                }else if(params.type=='payment' && user.fk_payment_address_id==null){
                     return response.status(400).json({message : 'This user does not have a payment address yet'})
                 }
 
@@ -188,15 +194,16 @@ export default class AddressesController {
                     const address = await Address.findOrFail(user.fk_payment_address_id);
                     await address.delete();
                     return response.status(200).json({address})
-                }else if(user.fk_delivery_address_id==null){
+                }else if(params.type=='delivery' &&user.fk_delivery_address_id==null){
                     return response.status(400).json({message : 'This user does not have a payment address yet'})
                 }
 
                 if(params.type=='restorer' && user.fk_restorer_id!=null){
-                    const address = await Address.findOrFail(user.restorer.fk_address_id);
+                    const restorer = await Restorer.findOrFail(user.fk_restorer_id)
+                    const address = await Address.findOrFail(restorer.fk_address_id);
                     await address.delete();
                     return response.status(200).json({address})
-                }else if(user.fk_restorer_id==null){
+                }else if(params.type=='restorer' && user.fk_restorer_id==null){
                     return response.status(400).json({message : 'This user does not have a restorer yet'})
                 }
 

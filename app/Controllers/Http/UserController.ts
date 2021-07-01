@@ -216,7 +216,7 @@ export default class UsersController {
                         filleul.user_is_supported = true;
                         await filleul.save();
                     }else{
-                        return response.status(400).json({message: "error this user is already supported or you enter the wrong email"})
+                        return response.status(400).json({message: "error this user is already supported or you enter the wrong email", code:'friend'})
                     }
                     return response.status(200).json({user})
                 }else{
