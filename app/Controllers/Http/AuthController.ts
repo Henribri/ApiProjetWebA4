@@ -6,7 +6,7 @@ export default class AuthController {
 
 
     /**
-     * @api {post} /login_auth Login a user.
+     * @api {post} /login Login a user.
      * @apiName login
      * @apiGroup Auth
      * @apiParam {String} email Email of the user.
@@ -47,7 +47,7 @@ export default class AuthController {
     }
 
     /**
-     * @api {get} /refresh_token_auth Get a new access token.
+     * @api {get} /refresh-token Get a new access token.
      * @apiName refreshToken
      * @apiGroup Auth
      * @apiParam (Authorization){String} Bearer Refresh Token value in authorisation Bearer.
@@ -73,7 +73,7 @@ export default class AuthController {
      * @api {get} /check_auth Verify an access token.
      * @apiName check
      * @apiGroup Auth
-     * @apiParam {String} jwt Token value.
+     * @apiParam (Authorization){String} Bearer Token value in authorisation Bearer.
      * @apiSuccess {Object} access_token Give values of access token.
      * @apiError (500) Error Wrong token.
      */
