@@ -65,7 +65,7 @@ export default class UsersController {
                 return response.status(500).json({err:"jwt token error"})
             }
         }catch(err){
-            return response.status(500).json({err})
+            return response.status(404).json('not found')
         }
 
     }
