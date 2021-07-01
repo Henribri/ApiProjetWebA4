@@ -7,7 +7,10 @@ export default  model('Command', new Schema({
         total_price:Number,
         date:String,
         validated:Boolean,
+
         restorer_id:Number,
+
+        
         client:{
             user_id:Number,
             firstname:String,
