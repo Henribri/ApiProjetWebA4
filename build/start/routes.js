@@ -7,7 +7,7 @@ const Route_1 = __importDefault(global[Symbol.for('ioc.use')]("Adonis/Core/Route
 Route_1.default.get('', () => {
     return '';
 });
-Route_1.default.post('login_auth', 'AuthController.loginAuth');
-Route_1.default.get('refresh_token_auth', 'AuthController.refreshTokenAuth');
-Route_1.default.get('check_auth', 'AuthController.checkAuth');
+Route_1.default.post('login', 'AuthController.loginAuth');
+Route_1.default.get('refresh-token', 'AuthController.refreshTokenAuth');
+Route_1.default.get('check-auth', 'AuthController.checkAuth');
 //# sourceMappingURL=routes.js.map

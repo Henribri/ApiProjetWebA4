@@ -5,8 +5,8 @@ Route.get('', ()=>{
     return ''
 })
 
-Route.post('login_auth','AuthController.loginAuth')
+Route.post('login','AuthController.loginAuth')
 
-Route.get('refresh_token_auth', 'AuthController.refreshTokenAuth')
+Route.get('refresh-token', 'AuthController.refreshTokenAuth')
 
-Route.get('check_auth', 'AuthController.checkAuth')
+Route.get('check-cd .auth', 'AuthController.checkAuth')

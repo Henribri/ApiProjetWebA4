@@ -39,7 +39,8 @@ class AuthController {
         }
     }
     async checkAuth({ request }) {
-        return jsonwebtoken_1.default.verify(request.input('jwt'), 'TOKEN_PRIVATE_KEY');
+        const token = request.header('authorization').split(" ");
+        return jsonwebtoken_1.default.verify(token[1], 'TOKEN_PRIVATE_KEY');
     }
 }
 exports.default = AuthController;
