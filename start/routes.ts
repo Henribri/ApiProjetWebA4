@@ -7,30 +7,30 @@ Route.get('', ()=>{
 
 
 /* Routes for ArticlesController */
-Route.get('get_all_articles', 'ArticlesController.getAllArticles')
+Route.get('articles', 'ArticlesController.getAllArticles')
 
-Route.get('get_one_article', 'ArticlesController.getOneArticle')
+Route.get('article', 'ArticlesController.getOneArticle')
 
-Route.get('get_articles_by_type', 'ArticlesController.getArticlesByType')
+Route.get('articles-type', 'ArticlesController.getArticlesByType')
 
-Route.get('get_articles_by_restorer', 'ArticlesController.getArticlesByRestorer')
+Route.get('articles-restorer', 'ArticlesController.getArticlesByRestorer')
 
 
 /* Routes for MenusController */
-Route.get('get_all_menus', 'MenusController.getAllMenus')
+Route.get('menus', 'MenusController.getAllMenus')
 
-Route.get('get_one_menu', 'MenusController.getOneMenu')
+Route.get('menu', 'MenusController.getOneMenu')
 
-Route.get('get_menus_by_restorer', 'MenusController.getMenusByRestorer')
+Route.get('menus-restorer', 'MenusController.getMenusByRestorer')
 
 
 
 
 Route.group(()=>{
-    Route.post('create_menu','MenusController.createMenu')
-    Route.put('edit_menu', 'MenusController.editMenu')
-    Route.delete('delete_menu', 'MenusController.deleteMenu')
-    Route.post('create_article','ArticlesController.createArticle')
-    Route.put('edit_article', 'ArticlesController.editArticle')
-    Route.delete('delete_article', 'ArticlesController.deleteArticle')
+    Route.post('menu','MenusController.createMenu')
+    Route.put('menu', 'MenusController.editMenu')
+    Route.delete('menu', 'MenusController.deleteMenu')
+    Route.post('article','ArticlesController.createArticle')
+    Route.put('article', 'ArticlesController.editArticle')
+    Route.delete('article', 'ArticlesController.deleteArticle')
 }).middleware('auth')

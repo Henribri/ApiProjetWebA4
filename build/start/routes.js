@@ -7,19 +7,19 @@ const Route_1 = __importDefault(global[Symbol.for('ioc.use')]("Adonis/Core/Route
 Route_1.default.get('', () => {
     return '';
 });
-Route_1.default.get('get_all_articles', 'ArticlesController.getAllArticles');
-Route_1.default.get('get_one_article', 'ArticlesController.getOneArticle');
-Route_1.default.get('get_articles_by_type', 'ArticlesController.getArticlesByType');
-Route_1.default.get('get_articles_by_restorer', 'ArticlesController.getArticlesByRestorer');
-Route_1.default.get('get_all_menus', 'MenusController.getAllMenus');
-Route_1.default.get('get_one_menu', 'MenusController.getOneMenu');
-Route_1.default.get('get_menus_by_restorer', 'MenusController.getMenusByRestorer');
+Route_1.default.get('articles', 'ArticlesController.getAllArticles');
+Route_1.default.get('article', 'ArticlesController.getOneArticle');
+Route_1.default.get('articles-type', 'ArticlesController.getArticlesByType');
+Route_1.default.get('articles-restorer', 'ArticlesController.getArticlesByRestorer');
+Route_1.default.get('menus', 'MenusController.getAllMenus');
+Route_1.default.get('menu', 'MenusController.getOneMenu');
+Route_1.default.get('menus-restorer', 'MenusController.getMenusByRestorer');
 Route_1.default.group(() => {
-    Route_1.default.post('create_menu', 'MenusController.createMenu');
-    Route_1.default.put('edit_menu', 'MenusController.editMenu');
-    Route_1.default.delete('delete_menu', 'MenusController.deleteMenu');
-    Route_1.default.post('create_article', 'ArticlesController.createArticle');
-    Route_1.default.put('edit_article', 'ArticlesController.editArticle');
-    Route_1.default.delete('delete_article', 'ArticlesController.deleteArticle');
+    Route_1.default.post('menu', 'MenusController.createMenu');
+    Route_1.default.put('menu', 'MenusController.editMenu');
+    Route_1.default.delete('menu', 'MenusController.deleteMenu');
+    Route_1.default.post('article', 'ArticlesController.createArticle');
+    Route_1.default.put('article', 'ArticlesController.editArticle');
+    Route_1.default.delete('article', 'ArticlesController.deleteArticle');
 }).middleware('auth');
 //# sourceMappingURL=routes.js.map
