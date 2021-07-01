@@ -1,7 +1,7 @@
 [
   {
     "type": "post",
-    "url": "/create_article",
+    "url": "/article",
     "title": "Create a new article",
     "name": "createArticle",
     "group": "Article",
@@ -14,6 +14,15 @@
             "optional": false,
             "field": "article",
             "description": "<p>Article object.</p>"
+          }
+        ],
+        "Authorization": [
+          {
+            "group": "Authorization",
+            "type": "String",
+            "optional": false,
+            "field": "Bearer",
+            "description": "<p>Token value in authorisation Bearer.</p>"
           }
         ]
       }
@@ -48,7 +57,7 @@
   },
   {
     "type": "delete",
-    "url": "/delete_article",
+    "url": "/article",
     "title": "Delete an article",
     "name": "deleteArticle",
     "group": "Article",
@@ -61,6 +70,15 @@
             "optional": false,
             "field": "article_id",
             "description": "<p>Id of article.</p>"
+          }
+        ],
+        "Authorization": [
+          {
+            "group": "Authorization",
+            "type": "String",
+            "optional": false,
+            "field": "Bearer",
+            "description": "<p>Token value in authorisation Bearer.</p>"
           }
         ]
       }
@@ -95,7 +113,7 @@
   },
   {
     "type": "put",
-    "url": "/edit_article",
+    "url": "/article",
     "title": "Edit an article",
     "name": "editArticle",
     "group": "Article",
@@ -117,6 +135,15 @@
             "optional": false,
             "field": "article",
             "description": "<p>Article object.</p>"
+          }
+        ],
+        "Authorization": [
+          {
+            "group": "Authorization",
+            "type": "String",
+            "optional": false,
+            "field": "Bearer",
+            "description": "<p>Token value in authorisation Bearer.</p>"
           }
         ]
       }
@@ -151,9 +178,9 @@
   },
   {
     "type": "get",
-    "url": "/get_all_article",
+    "url": "/articles",
     "title": "Request all articles",
-    "name": "getAllArticle",
+    "name": "getAllArticles",
     "group": "Article",
     "success": {
       "fields": {
@@ -186,7 +213,7 @@
   },
   {
     "type": "get",
-    "url": "/get_articles_by_restorer",
+    "url": "/articles-restorer",
     "title": "Request some articles by restorer",
     "name": "getArticlesByRestorer",
     "group": "Article",
@@ -234,7 +261,7 @@
   },
   {
     "type": "get",
-    "url": "/get_articles_by_type",
+    "url": "/articles-type",
     "title": "Request some articles by type",
     "name": "getArticlesByType",
     "group": "Article",
@@ -282,7 +309,7 @@
   },
   {
     "type": "get",
-    "url": "/get_one_article",
+    "url": "/article",
     "title": "Request article information",
     "name": "getOneArticle",
     "group": "Article",
@@ -330,7 +357,7 @@
   },
   {
     "type": "post",
-    "url": "/create_menu",
+    "url": "/menu",
     "title": "Create a new menu",
     "name": "createMenu",
     "group": "Menu",
@@ -343,6 +370,15 @@
             "optional": false,
             "field": "menu",
             "description": "<p>menu object.</p>"
+          }
+        ],
+        "Authorization": [
+          {
+            "group": "Authorization",
+            "type": "String",
+            "optional": false,
+            "field": "Bearer",
+            "description": "<p>Token value in authorisation Bearer.</p>"
           }
         ]
       }
@@ -377,7 +413,7 @@
   },
   {
     "type": "delete",
-    "url": "/delete_menu",
+    "url": "/menu",
     "title": "Delete a menu",
     "name": "deleteMenu",
     "group": "Menu",
@@ -390,6 +426,15 @@
             "optional": false,
             "field": "menu_id",
             "description": "<p>Id of menu.</p>"
+          }
+        ],
+        "Authorization": [
+          {
+            "group": "Authorization",
+            "type": "String",
+            "optional": false,
+            "field": "Bearer",
+            "description": "<p>Token value in authorisation Bearer.</p>"
           }
         ]
       }
@@ -424,7 +469,7 @@
   },
   {
     "type": "put",
-    "url": "/edit_menu",
+    "url": "/menu",
     "title": "Edit a menu",
     "name": "editMenu",
     "group": "Menu",
@@ -446,6 +491,15 @@
             "optional": false,
             "field": "menu",
             "description": "<p>menu object.</p>"
+          }
+        ],
+        "Authorization": [
+          {
+            "group": "Authorization",
+            "type": "String",
+            "optional": false,
+            "field": "Bearer",
+            "description": "<p>Token value in authorisation Bearer.</p>"
           }
         ]
       }
@@ -480,7 +534,7 @@
   },
   {
     "type": "get",
-    "url": "/get_all_menus",
+    "url": "/menus",
     "title": "Request information about all menus",
     "name": "getAllMenu",
     "group": "Menu",
@@ -515,7 +569,7 @@
   },
   {
     "type": "get",
-    "url": "/get_menu_by_restorer",
+    "url": "/menu-restorer",
     "title": "Request information about a menu by restorer",
     "name": "getMenusByRestorer",
     "group": "Menu",
@@ -563,7 +617,7 @@
   },
   {
     "type": "get",
-    "url": "/get_one_menu",
+    "url": "/menu",
     "title": "Request information about a menu",
     "name": "getOneMenu",
     "group": "Menu",

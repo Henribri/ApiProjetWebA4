@@ -6,7 +6,7 @@ export default class ArticlesController {
     
 
      /**
-     * @api {get} /get_one_article Request article information
+     * @api {get} /article Request article information
      * @apiName getOneArticle
      * @apiGroup Article
      * @apiParam {String} article_id Id of article.
@@ -22,8 +22,8 @@ export default class ArticlesController {
     }
 
      /**
-     * @api {get} /get_all_article Request all articles
-     * @apiName getAllArticle
+     * @api {get} /articles Request all articles
+     * @apiName getAllArticles
      * @apiGroup Article
      * @apiSuccess {Object[]} list_article List of articles.
      * @apiError (502) Error Error to request database.
@@ -38,7 +38,7 @@ export default class ArticlesController {
 
 
      /**
-     * @api {get} /get_articles_by_type Request some articles by type
+     * @api {get} /articles-type Request some articles by type
      * @apiName getArticlesByType
      * @apiGroup Article
      * @apiParam {String} article_type Type of articles.
@@ -55,7 +55,7 @@ export default class ArticlesController {
 
 
      /**
-     * @api {get} /get_articles_by_restorer Request some articles by restorer
+     * @api {get} /articles-restorer Request some articles by restorer
      * @apiName getArticlesByRestorer
      * @apiGroup Article
      * @apiParam {String} restorer_id Id of restorer.
@@ -72,10 +72,11 @@ export default class ArticlesController {
 
 
      /**
-     * @api {post} /create_article Create a new article
+     * @api {post} /article Create a new article
      * @apiName createArticle
      * @apiGroup Article
      * @apiParam (Body) {Object} article Article object.
+     * @apiParam (Authorization){String} Bearer Token value in authorisation Bearer.
      * @apiSuccess response Article created.
      * @apiError (502) Error Error to request database.
      */
@@ -91,11 +92,12 @@ export default class ArticlesController {
     
 
      /**
-     * @api {put} /edit_article Edit an article
+     * @api {put} /article Edit an article
      * @apiName editArticle
      * @apiGroup Article
      * @apiParam {String} article_id  Id of article.
      * @apiParam (Body) {Object} article Article object.
+     * @apiParam (Authorization){String} Bearer Token value in authorisation Bearer.
      * @apiSuccess response Articles edited.
      * @apiError (502) Error to request database.
      */
@@ -109,10 +111,11 @@ export default class ArticlesController {
     }
 
      /**
-     * @api {delete} /delete_article Delete an article
+     * @api {delete} /article Delete an article
      * @apiName deleteArticle
      * @apiGroup Article
      * @apiParam {String} article_id Id of article.
+     * @apiParam (Authorization){String} Bearer Token value in authorisation Bearer.
      * @apiSuccess response Articles deleted.
      * @apiError (502) Error to request database.
      */
