@@ -54,21 +54,21 @@ export default class AddressesController {
                     const address = await Address.findOrFail(user.fk_payment_address_id);
                     console.log('test')
                     return response.status(200).json(address)
-                }else if(user.fk_payment_address_id==null){
+                }else if(params.type=='payment' && user.fk_payment_address_id==null){
                     return response.status(400).json({message : 'This user does not have a payment address yet create it instead'})
                 }
 
                 if(params.type=='delivery' && user.fk_delivery_address_id!=null){
                     const address = await Address.findOrFail(user.fk_payment_address_id);
                     return response.status(200).json(address)
-                }else if(user.fk_delivery_address_id==null){
+                }else if(params.type=='delivery' && user.fk_delivery_address_id==null){
                     return response.status(400).json({message : 'This user does not have a payment address yet create it instead'})
                 }
 
                 if(params.type=='restorer' && user.fk_restorer_id!=null){
                     const address = await Address.findOrFail(user.restorer.fk_address_id);
                     return response.status(200).json(address)
-                }else if(user.fk_restorer_id==null){
+                }else if(params.type=='restorer' &&  user.fk_restorer_id==null){
                     return response.status(400).json({message : 'This user does not have a restorer yet create it instead'})
                 }
                 if(!user){
