@@ -1,9 +1,11 @@
 import Route from '@ioc:Adonis/Core/Route'
 
-
+Route.get('', ()=>{
+    return ''
+})
 
 /* Command requests */
-
+Route.group(()=>{
 Route.get('command', 'CommandsController.getCommand')
 
 Route.post('command', 'CommandsController.createCommand')
@@ -24,3 +26,4 @@ Route.patch('validate', 'CommandsController.validateCommand')
 Route.get('commands', 'CommandsController.getHistoricCommand')
 
 Route.delete('commands', 'CommandsController.deleteHistoricCommand')
+}).middleware('auth')
