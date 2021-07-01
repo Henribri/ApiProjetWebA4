@@ -57,7 +57,7 @@ define({ "api": [
   },
   {
     "type": "delete",
-    "url": "/delete_command",
+    "url": "/command",
     "title": "Delete a Command.",
     "name": "deleteCommand",
     "group": "Command",
@@ -113,7 +113,7 @@ define({ "api": [
   },
   {
     "type": "delete",
-    "url": "/delete_historic_command",
+    "url": "/commands",
     "title": "Delete Commands historic.",
     "name": "deleteHistoricCommand",
     "group": "Command",
@@ -169,7 +169,7 @@ define({ "api": [
   },
   {
     "type": "put",
-    "url": "/edit_command",
+    "url": "/command",
     "title": "Edit a Command.",
     "name": "editCommand",
     "group": "Command",
@@ -282,7 +282,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/get_historic_command",
+    "url": "/commands",
     "title": "Get Commands of a user.",
     "name": "getHistoricCommand",
     "group": "Command",
@@ -330,7 +330,7 @@ define({ "api": [
   },
   {
     "type": "patch",
-    "url": "/pay_command",
+    "url": "/pay",
     "title": "Pay a Command.",
     "name": "payCommand",
     "group": "Command",
@@ -386,7 +386,7 @@ define({ "api": [
   },
   {
     "type": "patch",
-    "url": "/validate_command",
+    "url": "/validate",
     "title": "Validate a Command.",
     "name": "validateCommand",
     "group": "Command",

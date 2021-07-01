@@ -52,7 +52,7 @@ class CommandsController {
     }
     async validateCommand({ request, response }) {
         try {
-            await Command_1.default.updateOne({ _id: request.input('command_id') }, { validated: true });
+            await Command_1.default.updateOne({ _id: request.input('command_id') }, { "info.validated": true });
             return response.ok("Command validated");
         }
         catch (err) {

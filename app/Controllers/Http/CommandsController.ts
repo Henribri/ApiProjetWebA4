@@ -42,7 +42,7 @@ export default class CommandsController {
     }
     
     /**
-     * @api {put} /edit_command Edit a Command.
+     * @api {put} /command Edit a Command.
      * @apiName editCommand
      * @apiGroup Command
      * @apiParam {String} command_id Id of command.
@@ -61,7 +61,7 @@ export default class CommandsController {
     }
 
     /**
-     * @api {delete} /delete_command Delete a Command.
+     * @api {delete} /command Delete a Command.
      * @apiName deleteCommand
      * @apiGroup Command
      * @apiParam {String} command_id Id of command.
@@ -80,7 +80,7 @@ export default class CommandsController {
     }
 
     /**
-     * @api {patch} /pay_command Pay a Command.
+     * @api {patch} /pay Pay a Command.
      * @apiName payCommand
      * @apiGroup Command
      * @apiParam {String} command_id Id of command.
@@ -99,7 +99,7 @@ export default class CommandsController {
     }
 
         /**
-         * @api {patch} /validate_command Validate a Command.
+         * @api {patch} /validate Validate a Command.
          * @apiName validateCommand
          * @apiGroup Command
          * @apiParam {String} command_id Id of command.
@@ -109,7 +109,7 @@ export default class CommandsController {
          */
          public async validateCommand ({request, response}:HttpContextContract){
             try{
-                await Command.updateOne({_id:request.input('command_id')}, {validated:true}) 
+                await Command.updateOne({_id:request.input('command_id')}, {"info.validated":true}) 
                 return response.ok("Command validated")      
             }catch(err){
                 return response.status(502)
@@ -121,7 +121,7 @@ export default class CommandsController {
     /*    Historic requests    */
 
     /**
-     * @api {get} /get_historic_command Get Commands of a user.
+     * @api {get} /commands Get Commands of a user.
      * @apiName getHistoricCommand
      * @apiGroup Command
      * @apiParam {Number} client_id Id of command.
@@ -140,7 +140,7 @@ export default class CommandsController {
     }
 
     /**
-     * @api {delete} /delete_historic_command Delete Commands historic.
+     * @api {delete} /commands Delete Commands historic.
      * @apiName deleteHistoricCommand
      * @apiGroup Command
      * @apiParam (Authorization){String} Bearer Token value in authorisation Bearer.
