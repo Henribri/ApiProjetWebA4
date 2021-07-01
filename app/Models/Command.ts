@@ -3,8 +3,9 @@ import { Schema, model } from "@ioc:Mongoose";
 export default  model('Command', new Schema({
     
     articles:[],
-    total_price:Number,
     info: {
+        total_price:Number,
+        date:String,
         validated:Boolean,
         restorer_id:Number,
         client:{
