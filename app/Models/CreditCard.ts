@@ -8,10 +8,10 @@ export default class PayMethod extends BaseModel {
   @column({ isPrimary: true })
   public credit_card_id: number
 
-  @column({ serializeAs: null })
+  @column()
   public credit_card_type: string
 
-  @column({ serializeAs: null })
+  @column()
   public credit_card_num: number
 
   @hasOne(()=>User, {

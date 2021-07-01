@@ -7,16 +7,16 @@ export default class Address extends BaseModel {
   @column({ isPrimary: true })
   public address_id: number
 
-  @column({ serializeAs: null })
+  @column()
   public address_city: string
 
-  @column({ serializeAs: null })
+  @column()
   public address_street: string
 
-  @column({ serializeAs: null })
+  @column()
   public address_street_number: number
 
-  @column({ serializeAs: null })
+  @column()
   public address_postal_code: number
 
   @hasMany(() => User,{
