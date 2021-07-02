@@ -69,6 +69,24 @@ class CommandsController {
             return response.status(502);
         }
     }
+    async getCommands({ response }) {
+        try {
+            return response.send(await Command_1.default.find());
+        }
+        catch (err) {
+            return response.status(502);
+        }
+    }
+    async getCommandsByRestorer({ request, response }) {
+        try {
+            const token = request.header('authorization').split(" ");
+            const user_id = jsonwebtoken_1.default.verify(token[1], "TOKEN_PRIVATE_KEY").user_id;
+            return response.send(await Command_1.default.find({ 'info.restorer_id': user_id }));
+        }
+        catch (err) {
+            return response.status(502);
+        }
+    }
     async deleteHistoricCommand({ request, response }) {
         try {
             await Command_1.default.deleteMany({ _id: { $in: request.body().delete_historic } });

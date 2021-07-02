@@ -18,12 +18,14 @@ Route.patch('pay', 'CommandsController.payCommand')
 
 Route.patch('validate', 'CommandsController.validateCommand')
 
+Route.get('commands', 'CommandsController.getCommands')
 
+Route.get('commands-restorer', 'CommandsController.getCommandsByRestorer')
 
 
 /*    Historic requests    */
 
-Route.get('commands', 'CommandsController.getHistoricCommand')
+Route.get('historic', 'CommandsController.getHistoricCommand')
 
-Route.delete('commands', 'CommandsController.deleteHistoricCommand')
+Route.delete('historic', 'CommandsController.deleteHistoricCommand')
 }).middleware('auth')

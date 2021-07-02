@@ -135,8 +135,27 @@ export default class CommandsController {
             return response.send(await Command.find({'info.client.user_id':user_id}))
         }catch(err){
             return response.status(502)
+        }         
+        
+    
+    }
+
+    public async getCommands ({response}){
+        try{
+            return response.send(await Command.find())
+        }catch(err){
+            return response.status(502)
         }
-          
+
+    }
+    public async getCommandsByRestorer ({request, response}){
+        try{
+            const token = request.header('authorization').split(" ")
+            const user_id=jwt.verify(token[1], "TOKEN_PRIVATE_KEY").user_id
+            return response.send(await Command.find({'info.restorer_id':user_id}))
+        }catch(err){
+            return response.status(502)
+        }
     }
 
     /**

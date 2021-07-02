@@ -14,7 +14,9 @@ Route_1.default.group(() => {
     Route_1.default.put('command', 'CommandsController.editCommand');
     Route_1.default.patch('pay', 'CommandsController.payCommand');
     Route_1.default.patch('validate', 'CommandsController.validateCommand');
-    Route_1.default.get('commands', 'CommandsController.getHistoricCommand');
-    Route_1.default.delete('commands', 'CommandsController.deleteHistoricCommand');
+    Route_1.default.get('commands', 'CommandsController.getCommands');
+    Route_1.default.get('commands-restorer', 'CommandsController.getCommandsByRestorer');
+    Route_1.default.get('historic', 'CommandsController.getHistoricCommand');
+    Route_1.default.delete('historic', 'CommandsController.deleteHistoricCommand');
 }).middleware('auth');
 //# sourceMappingURL=routes.js.map
