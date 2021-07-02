@@ -150,9 +150,8 @@ export default class CommandsController {
     }
     public async getCommandsByRestorer ({request, response}){
         try{
-            const token = request.header('authorization').split(" ")
-            const user_id=jwt.verify(token[1], "TOKEN_PRIVATE_KEY").user_id
-            return response.send(await Command.find({'info.restorer_id':user_id}))
+            const restorer_id = request.input('restorer_id')
+            return response.send(await Command.find({'info.restorer_id':restorer_id}))
         }catch(err){
             return response.status(502)
         }
